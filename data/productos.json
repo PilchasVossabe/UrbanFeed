@@ -4,4 +4,5 @@
   {"nombre":"Campera Urban","precio":35000,"tipo":"camperas","estado":"liquidacion","imagen":"campera1.jpg"},
   {"nombre":"Pantalón Cargo Gris","precio":18000,"tipo":"pantalones","estado":"nuevo","imagen":"pantalon1.jpg"},
   {"nombre":"Gorra Snapback Negra","precio":9000,"tipo":"accesorios","estado":"liquidacion","imagen":"gorra1.jpg"}
+
 ]
