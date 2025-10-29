@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Urban Feed - Contacto</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/main.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="sidebar">
+    <h2 class="logo-sidebar">Urban Feed</h2>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="liquidacion.html">Liquidación</a>
+      <a href="lanzamientos.html">Nuevos lanzamientos</a>
+      <div class="filtros-sidebar">
+        <label>Filtros:</label>
+        <select id="categoria-filtro">
+          <option value="todos">Todos</option>
+        </select>
+        <input type="text" id="buscar-productos" placeholder="Buscar prendas...">
+      </div>
+      <a href="contacto.html" class="activo">Contacto</a>
+    </nav>
+  </div>
+
+  <main>
+    <section class="contacto-form">
+      <h2>Dejanos tu consulta</h2>
+      <form id="consultaForm">
+        <input type="text" placeholder="Nombre" required>
+        <input type="email" placeholder="Email" required>
+        <textarea placeholder="Mensaje" required></textarea>
+        <button type="submit">Enviar consulta</button>
+      </form>
+    </section>
+  </main>
+
+  <div class="botones-flotantes">
+    <a href="https://wa.me/5493413688248?text=Hola%20Urban%20Feed%20👋🏻%2C%20quiero%20consultar%20por%20una%20prenda!" target="_blank" class="btn-whatsapp">💬</a>
+    <a href="https://www.instagram.com/urban_feed1/" target="_blank" class="btn-instagram">📷</a>
+  </div>
+
+  <footer>
+    <p>Urban Feed nace del movimiento callejero, del ritmo del trap y la moda urbana. Representamos actitud, libertad y estilo propio. No seguimos tendencias, las creamos. 🔥</p>
+  </footer>
+</body>
+</html>
