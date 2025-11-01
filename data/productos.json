@@ -1,0 +1,47 @@
+[
+  {
+    "id": "p1",
+    "nombre": "Remera Street Negra",
+    "precio": 15000,
+    "tipo": "remeras",
+    "estado": "nuevo",
+    "imagen": "remera1.jpg",
+    "stock": 5
+  },
+  {
+    "id": "p2",
+    "nombre": "Buzo Classic Blanco",
+    "precio": 22000,
+    "tipo": "buzos",
+    "estado": "nuevo",
+    "imagen": "buzo1.jpg",
+    "stock": 3
+  },
+  {
+    "id": "p3",
+    "nombre": "Campera Urban",
+    "precio": 35000,
+    "tipo": "camperas",
+    "estado": "liquidacion",
+    "imagen": "campera1.jpg",
+    "stock": 2
+  },
+  {
+    "id": "p4",
+    "nombre": "Pantalón Cargo Gris",
+    "precio": 18000,
+    "tipo": "pantalones",
+    "estado": "nuevo",
+    "imagen": "pantalon1.jpg",
+    "stock": 4
+  },
+  {
+    "id": "p5",
+    "nombre": "Gorra Snapback Negra",
+    "precio": 9000,
+    "tipo": "accesorios",
+    "estado": "liquidacion",
+    "imagen": "gorra1.jpg",
+    "stock": 0
+  }
+]

@@ -1,0 +1,1 @@
+Urbanfeed_v3 SPA - instrucciones de uso: reemplaza imágenes en /img, reemplaza tracks en /music, edita data/productos.json o el Excel en data/.
