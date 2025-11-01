@@ -12,7 +12,7 @@ document.getElementById('guardar-datos').onclick = function() {
 };
 
 // Música básica
-const canciones = ['music/track01.mp3','music/track02.mp3','music/track03.mp3'];
+const canciones = ['music/tema1.mp3','music/tema02.mp3','music/tema03.mp3'];
 let indice = Math.floor(Math.random()*canciones.length);
 let audio = new Audio(canciones[indice]);
 
