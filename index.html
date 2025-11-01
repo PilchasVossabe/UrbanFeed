@@ -1,159 +1,72 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Urban Feed</title>
-<link rel="stylesheet" href="css/style.css">
-<script defer src="js/app.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Urban Feed</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div id="app" class="app">
-  <!-- Sidebar / Navbar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-top">
-      <a href="#" class="logo-link" data-navigate="home"><img id="logo-small" src="img/logo.png" alt="Urban Feed" class="logo-img"></a>
-      <h2 class="logo-text">Urban Feed</h2>
-      <button id="btn-close-menu" class="close-menu" aria-label="Cerrar menú">✕</button>
-    </div>
-    <nav class="nav">
-      <a href="#" class="nav-link" data-navigate="home">Inicio</a>
-      <a href="#" class="nav-link" data-navigate="catalogo">Catálogo</a>
-      <a href="#" class="nav-link" data-navigate="liquidacion">Liquidación</a>
-      <a href="#" class="nav-link" data-navigate="lanzamientos">Nuevos lanzamientos</a>
-      <a href="#" class="nav-link" data-navigate="nosotros">Nosotros</a>
-      <a href="#" class="nav-link" data-navigate="contacto">Contacto</a>
-
-      <div class="menu-sep">Filtros</div>
-      <div class="filtros-sidebar">
-        <select id="categoria-filtro">
-          <option value="todos">Todos</option>
-          <option value="remeras">Remeras</option>
-          <option value="buzos">Buzos</option>
-          <option value="camperas">Camperas</option>
-          <option value="pantalones">Pantalones</option>
-          <option value="accesorios">Accesorios</option>
-        </select>
-        <input id="buscar-productos" type="text" placeholder="Buscar prendas...">
+  <header>
+    <nav class="navbar">
+      <div class="logo"><img src="img/logo.png" alt="Urban Feed"></div>
+      <ul class="nav-links">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#liquidacion">Liquidación</a></li>
+        <li><a href="#lanzamientos">Lanzamientos</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <div class="icons">
+        <span id="cart-icon">🛒</span>
+        <span id="user-icon">👤</span>
       </div>
-
     </nav>
-    <div class="sidebar-footer"><small>© 2025 Urban Feed</small></div>
-  </aside>
-
-  <!-- Topbar for mobile -->
-  <header class="topbar">
-    <button id="btn-open-menu" class="hamburger" aria-label="Abrir menú">☰</button>
-    <div class="top-title"><a href="#" data-navigate="home" class="logo-link-inline"><img id="logo-top" src="img/logo.png" alt="Urban Feed" class="logo-img-small"></a></div>
-    <div class="top-actions">
-      <button id="btn-open-cart" class="cart-btn">🛒 <span id="cart-count">0</span></button>
-    </div>
   </header>
 
-  <!-- Main content area -->
-  <main id="main" class="main">
-    <!-- Hero / Home -->
-    <section id="home" class="page page-home">
-      <div class="aurora"></div>
-      <div class="hero">
-        <div class="hero-logo"><img id="logo-big" src="img/logo.png" alt="Urban Feed"></div>
-        <h1>🔥 En Tendencia: Lo más pedido esta semana</h1>
-        <p class="sub">Descubrí lo que está rompiendo en la escena urbana — actualizado cada semana.</p>
-      </div>
-      <section class="productos-tendencia">
-        <div id="tendencia-grid" class="grid-productos"></div>
-      </section>
+  <main>
+    <section id="inicio">
+      <h1>Bienvenido a Urban Feed</h1>
     </section>
 
-    <!-- Catalog -->
-    <section id="catalogo" class="page page-catalogo hidden">
-      <h2>Catálogo Completo</h2>
-      <div id="catalogo-grid" class="grid-productos"></div>
+    <section id="catalogo">
+      <h2>Catálogo</h2>
+      <div id="productos"></div>
     </section>
 
-    <!-- Liquidacion -->
-    <section id="liquidacion" class="page page-liquidacion hidden">
-      <h2>Liquidación</h2>
-      <div id="liquidacion-grid" class="grid-productos"></div>
-    </section>
-
-    <!-- Lanzamientos -->
-    <section id="lanzamientos" class="page page-lanzamientos hidden">
-      <h2>Nuevos lanzamientos</h2>
-      <div id="lanzamientos-grid" class="grid-productos"></div>
-    </section>
-
-    <!-- Nosotros -->
-    <section id="nosotros" class="page page-nosotros hidden">
-      <div class="nosotros-bg">
-        <div class="nosotros-content">
-          <h2>Nosotros</h2>
-          <p class="nosotros-phrase">Urban Feed es más que indumentaria, es cultura street y movimiento urbano.</p>
-        </div>
+    <section id="nosotros">
+      <h2>Nosotros</h2>
+      <div class="nosotros-contenido">
+        <p>Aquí podrás colocar la imagen o descripción de tu empresa.</p>
       </div>
     </section>
-
-    <!-- Contacto -->
-    <section id="contacto" class="page page-contacto hidden">
-      <h2>Contacto</h2>
-      <form id="consultaForm" class="contacto-form">
-        <input id="c-nombre" type="text" placeholder="Nombre" required>
-        <input id="c-email" type="email" placeholder="Email" required>
-        <textarea id="c-mensaje" placeholder="Mensaje" required></textarea>
-        <button type="submit" class="btn btn-primary">Enviar consulta</button>
-      </form>
-    </section>
-
-    <footer class="footer">
-      <div class="about">
-        <div id="about-media"></div>
-        <p id="about-text"><strong>Sobre nosotros:</strong> Urban Feed nace del movimiento callejero, del ritmo del trap y la moda urbana. Representamos actitud, libertad y estilo propio. No seguimos tendencias, las creamos. 🔥</p>
-      </div>
-    </footer>
   </main>
 
-  <!-- Floating action buttons -->
-  <div class="floating">
-    <a id="btn-whatsapp" class="fab whatsapp" href="#" title="WhatsApp" target="_blank" aria-label="WhatsApp"></a>
-    <a id="btn-instagram" class="fab instagram" href="https://www.instagram.com/urban_feed1/" target="_blank" title="Instagram" aria-label="Instagram"></a>
-    <button id="fab-cart" class="fab cart-fab" title="Ver carrito">🛒 <span id="fab-cart-count">0</span></button>
-    <button id="music-toggle" class="fab music-fab" title="Reproductor">🎵</button>
+  <div id="music-bar">
+    <button id="prev">⏮</button>
+    <button id="play">▶</button>
+    <button id="next">⏭</button>
   </div>
 
-  <!-- Music player expanded -->
-  <div id="music-bar" class="music-bar hidden">
-    <div class="music-controls">
-      <button id="music-prev" class="icon">⏮</button>
-      <button id="music-play" class="icon">▶️</button>
-      <button id="music-next" class="icon">⏭</button>
-      <div id="music-title" class="music-title">—</div>
-      <div id="music-list" class="music-list"></div>
+  <div id="floating-buttons">
+    <a href="#carrito" id="btn-cart">🛒</a>
+    <a href="#music" id="btn-music">🎵</a>
+    <a href="https://instagram.com/urban_feed1" target="_blank" id="btn-instagram"><img src="icons/instagram.svg" alt="Instagram"></a>
+    <a href="https://wa.me/5493413688248" target="_blank" id="btn-whatsapp"><img src="icons/whatsapp.svg" alt="WhatsApp"></a>
+  </div>
+
+  <div id="login-modal" class="modal">
+    <div class="modal-content">
+      <h3>Tus datos para entrega</h3>
+      <input type="text" id="nombre" placeholder="Nombre">
+      <input type="text" id="apellido" placeholder="Apellido">
+      <input type="text" id="direccion" placeholder="Dirección">
+      <button id="guardar-datos">Guardar mis datos</button>
+      <p class="aviso">Estos datos se utilizan solo para coordinar la entrega de tu pedido.</p>
     </div>
   </div>
 
-  <!-- Cart drawer -->
-  <div id="cart-drawer" class="cart-drawer">
-    <div class="cart-header">
-      <h3>Tu pedido</h3>
-      <button id="close-cart" class="close-cart">✕</button>
-    </div>
-    <div id="cart-items" class="cart-items"></div>
-    <div class="cart-footer">
-      <div class="cart-total">Total: <span id="cart-total">$0</span></div>
-      <div class="cart-actions">
-        <button id="clear-cart" class="btn btn-outline">Vaciar</button>
-        <button id="send-order" class="btn btn-primary">Enviar por WhatsApp</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Overlay -->
-  <div id="overlay" class="overlay"></div>
-
-  <!-- Audio element (one global so music doesn't stop) -->
-  <audio id="bg-audio" preload="auto"></audio>
-
-</div>
+  <script src="js/app.js"></script>
 </body>
 </html>
