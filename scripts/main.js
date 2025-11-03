@@ -13,6 +13,12 @@ const products = [
     { id: 9, name: "Camiseta Vintage 90s", price: 40.00, category: "Remeras", isFeatured: false, isLiquidacion: false, image: "images/camiseta_vintage.jpg" }
 ];
 
+// 🆕 NUEVOS SELECTORES PARA MENÚ MÓVIL
+const menuToggleBtn = document.getElementById('menu-toggle-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const closeMobileMenuBtn = document.getElementById('close-mobile-menu-btn'); // ID corregido
+const mobileLinks = document.querySelectorAll('.nav-link-mobile');
+
 // =========================================================
 // 2. LÓGICA DE NAVEGACIÓN (SPA)
 // =========================================================
@@ -42,6 +48,14 @@ function navigateTo(targetPage) {
     });
 
     document.querySelectorAll('.top-nav-center .nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.dataset.target === targetPage) {
+            link.classList.add('active');
+        }
+    });
+
+    // 🆕 ACTIVA EL LINK CORRESPONDIENTE EN EL MENÚ MÓVIL
+    document.querySelectorAll('.mobile-nav-links .nav-link-mobile').forEach(link => {
         link.classList.remove('active');
         if (link.dataset.target === targetPage) {
             link.classList.add('active');
@@ -192,6 +206,11 @@ function openModal(modalId) {
         
         overlay.classList.add('visible');
         overlay.classList.remove('closed'); 
+        
+        // Cierra el menú móvil si está abierto antes de abrir el modal
+        if (mobileMenu && mobileMenu.classList.contains('visible')) {
+            mobileMenu.classList.remove('visible');
+        }
     }
 }
 
@@ -206,7 +225,35 @@ function closeModal() {
 }
 
 // ==========================================================
-// MÓDULO DE REPRODUCTOR DE MÚSICA (Playlist) - CORREGIDO DEFINITIVO
+// 5. LÓGICA DE INTERACCIÓN MÓVIL
+// ==========================================================
+
+// 🆕 LÓGICA DEL MENÚ DE HAMBURGUESA
+if (menuToggleBtn && mobileMenu) {
+    menuToggleBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('visible');
+        mobileMenu.classList.toggle('closed');
+    });
+
+    closeMobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.remove('visible');
+        mobileMenu.classList.add('closed');
+    });
+
+    // Cerrar menú al hacer clic en un enlace móvil
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); // Evita el salto instantáneo
+            navigateTo(e.target.dataset.target);
+            mobileMenu.classList.remove('visible');
+            mobileMenu.classList.add('closed');
+        });
+    });
+}
+
+
+// ==========================================================
+// 6. MÓDULO DE REPRODUCTOR DE MÚSICA (Playlist)
 // ==========================================================
 
 const musicAudio = document.getElementById('background-music');
@@ -217,7 +264,6 @@ const musicTitleDisplay = musicBar.querySelector('span');
 let currentSongIndex = 0;
 let isPlaying = false;
 
-// LISTA DE REPRODUCCIÓN (¡RUTA CORREGIDA! Eliminado el "../")
 const playlist = [
     { title: "Doja Cat", file: "audio/track5.mp3" }, 
     { title: "To ke ver", file: "audio/track2.mp3" }, 
@@ -239,24 +285,20 @@ const playlist = [
 function loadAndPlaySong() {
     if (playlist.length === 0) return;
 
-    // Asegura que el índice esté dentro del rango del array y vuelva a 0 si llega al final
     if (currentSongIndex >= playlist.length) {
         currentSongIndex = 0; 
     }
 
     const song = playlist[currentSongIndex];
     
-    // *** ANTI-CACHÉ: Agregamos un timestamp único para obligar al navegador a cargar el nuevo archivo ***
     const antiCacheURL = `${song.file}?t=${new Date().getTime()}`;
     
-    // Asigna la fuente usando la URL con anti-cache
     musicAudio.src = antiCacheURL; 
     musicTitleDisplay.textContent = `▶️ ${song.title}`; 
     
     musicAudio.load();
     
     if (isPlaying) {
-        // Intenta reproducir, captura errores de Autoplay
         musicAudio.play().catch(error => {
             console.warn("El navegador bloqueó el AutoPlay o hubo un error de códec. El usuario debe interactuar.", error);
         });
@@ -265,15 +307,12 @@ function loadAndPlaySong() {
 
 function toggleMusic() {
     if (isPlaying) {
-        // Pausar y cerrar
         musicAudio.pause();
         musicBar.classList.add('closed');
         musicToggleButton.innerHTML = '<i class="fas fa-volume-off"></i>';
         isPlaying = false;
     } else {
-        // Reproducir y abrir
         if (!musicAudio.src || musicAudio.src.includes('audio/cancion_1.mp3')) {
-            // Si es la primera vez, carga la canción actual
             loadAndPlaySong(); 
         }
         
@@ -292,27 +331,25 @@ function playNextSong() {
     loadAndPlaySong(); 
 }
 
-// Lógica de "Canción Terminada" (El evento clave para la reproducción continua)
 musicAudio.addEventListener('ended', playNextSong);
 
-// Inicialización de Eventos de Música
 musicToggleButton.addEventListener('click', toggleMusic);
 nextSongButton.addEventListener('click', (e) => {
     e.stopPropagation(); 
     playNextSong();
 });
 
-// Carga inicial para mostrar el título en la barra al cargar la página
 if (playlist.length > 0) {
     musicTitleDisplay.textContent = `🎧 ${playlist[currentSongIndex].title}`;
 }
 
+
 // =========================================================
-// 6. EVENT LISTENERS
+// 7. EVENT LISTENERS PRINCIPALES
 // =========================================================
 document.addEventListener('click', (e) => {
-    // 1. Navegación SPA
-    if (e.target.classList.contains('nav-link')) {
+    // 1. Navegación SPA (De links de escritorio)
+    if (e.target.classList.contains('nav-link') && !e.target.classList.contains('nav-link-mobile')) {
         e.preventDefault();
         navigateTo(e.target.dataset.target);
     }
@@ -342,7 +379,7 @@ document.addEventListener('click', (e) => {
     
     // 6. Control del Botón Flotante de Música
     if (e.target.id === 'music-toggle-btn' || e.target.closest('#music-toggle-btn')) {
-        toggleMusicPlayer();
+        toggleMusic(); // Usamos la función ya definida
     }
 
     // 7. Generar Mensaje de WhatsApp
@@ -382,11 +419,6 @@ document.addEventListener('click', (e) => {
         const whatsappUrl = `https://wa.me/5493413688248?text=${encodeURIComponent(orderSummary)}`;
         
         window.open(whatsappUrl, '_blank');
-        
-        // Opcional: Limpiar carrito y cerrar modales después de enviar
-        // cart = [];
-        // saveCart(cart);
-        // closeModal();
     }
 });
 
@@ -402,19 +434,22 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartDisplay();
     closeModal(); // Aseguramos que todos los modales estén cerrados al inicio
 
-    // 3. Inicialización de Música
-    initMusicPlayer();
-    if (playPauseBtn) playPauseBtn.addEventListener('click', togglePlayPause);
-    if (document.getElementById('prev-btn')) document.getElementById('prev-btn').addEventListener('click', () => changeTrack(-1));
-    if (document.getElementById('next-btn')) document.getElementById('next-btn').addEventListener('click', () => changeTrack(1));
-    
+    // 3. Inicialización de Música (simplificado, ya usa toggleMusic)
+    if (playlist.length > 0) {
+        loadAndPlaySong(); // Carga la primera canción al inicio
+    }
+    // NOTA: Se eliminó código redundante de música (initMusicPlayer, etc.)
+
     // 4. Lógica de Botones Top-Bar (Carrito y Búsqueda)
-    if (document.getElementById('cart-float-btn-top')) {
-        document.getElementById('cart-float-btn-top').addEventListener('click', () => {
-            openModal('cart-modal'); // **ESTO AHORA DEBE FUNCIONAR**
+    const cartIconBtn = document.getElementById('cart-icon-btn'); // 🆕 Usando el nuevo ID
+    const searchOverlay = document.getElementById('search-overlay');
+    
+    if (cartIconBtn) {
+        cartIconBtn.addEventListener('click', () => {
+            openModal('cart-modal'); // **CORREGIDO: Ahora abre el modal correctamente**
         });
     }
-    const searchOverlay = document.getElementById('search-overlay');
+    
     if (document.getElementById('search-btn-top')) {
         document.getElementById('search-btn-top').addEventListener('click', () => {
             searchOverlay.classList.toggle('closed');
@@ -432,7 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // =========================================================
-// 7. NOTIFICACIONES
+// 8. NOTIFICACIONES
 // =========================================================
 function showNotification(message) {
     const notification = document.getElementById('cart-notification');
