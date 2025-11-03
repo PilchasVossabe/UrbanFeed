@@ -33,10 +33,10 @@ body {
     
     color: var(--text-light);
     min-height: 100vh;
-    display: flex;    
+    display: flex;  
     flex-direction: column;
     /* ✅ Mantiene el scroll horizontal oculto */
-    overflow-x: hidden;    
+    overflow-x: hidden;     
     padding-top: var(--top-bar-height); 
     
     /* 🛠️ CORRECCIÓN DE MÓVIL (Asegura que el body ocupe 100% y no haya márgenes residuales) */
@@ -49,6 +49,10 @@ body {
     display: none !important; 
 }
 
+/* ESTILO BASE PARA EL BOTÓN DE HAMBURGUESA (OCULTO EN ESCRITORIO) */
+#menu-toggle-btn {
+    display: none; 
+}
 
 /* -------------------------------------- */
 /* 2. BARRA SUPERIOR (TOP-BAR) */
@@ -62,23 +66,23 @@ body {
     /* Fondo semi-transparente para ver el fondo principal */
     background: rgba(6, 161, 233, 0.322);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 1000;    
+    z-index: 1000;      
     display: flex;
-    justify-content: space-between;    
+    justify-content: space-between;     
     align-items: center;
     padding: 0 20px;    
 }
 .top-bar-logo {
-    height: 40px;    
+    height: 40px;   
     width: auto;
     filter: drop-shadow(0 0 5px var(--neon-blue));
-    position: relative;    
-    z-index: 1001;    
+    position: relative;     
+    z-index: 1001;      
 }
 .top-nav-center {
     display: flex;
     justify-content: center;
-    flex-grow: 1;    
+    flex-grow: 1;   
     gap: 30px;
 }
 .top-nav-center .nav-link {
@@ -106,6 +110,8 @@ body {
 }
 .top-bar-icon[data-color="violet"]:hover { color: var(--neon-violet); }
 .top-bar-icon[data-color="red"]:hover { color: var(--neon-red); }
+.top-bar-icon[data-color="blue"]:hover { color: var(--neon-blue); } /* Añadido hover para el botón de hamburguesa */
+
 #cart-count {
     position: absolute;
     top: -5px;
@@ -162,10 +168,10 @@ body {
     padding: 20px;
     max-width: 100%;    
     width: 100%; /* 🛠️ CORRECCIÓN: Asegura que ocupe todo el ancho disponible */
-    z-index: 1;    
+    z-index: 1;     
     
     /* Corrección: Permite que el fondo del body se vea */
-    background-color: transparent;    
+    background-color: transparent;     
 }
 .main-header {
     text-align: center;
@@ -204,7 +210,7 @@ body {
 .product-grid {
     display: grid;
     /* Usa un tamaño mínimo que quepa en un móvil (280px) */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));    
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));     
     gap: 30px;
     padding: 20px 0;
     max-width: 1200px;
@@ -225,7 +231,7 @@ body {
 }
 .product-card img {
     width: 100%;
-    height: 250px;    
+    height: 250px;     
     object-fit: cover;
     display: block;
 }
@@ -234,31 +240,31 @@ body {
 }
 .product-info h3 {
     font-size: 1.2em;
-    color: var(--text-light);    
+    color: var(--text-light);   
     margin-bottom: 5px;
 }
 .product-info p {
     font-size: 1.5em;
     font-weight: bold;
-    color: var(--neon-red);    
+    color: var(--neon-red);     
     margin-bottom: 15px;
-    text-shadow: 0 0 5px rgba(255, 0, 92, 0.5);    
+    text-shadow: 0 0 5px rgba(255, 0, 92, 0.5);     
 }
 .product-info .buy-btn {
-    width: 90%;    
+    width: 90%;     
     padding: 10px;
     font-size: 1em;
     font-weight: bold;
-    background: var(--text-light);    
-    color: var(--bg-dark);    
-    border: 2px solid var(--neon-blue);    
+    background: var(--text-light);      
+    color: var(--bg-dark);      
+    border: 2px solid var(--neon-blue);      
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
-    margin-bottom: 10px;    
+    margin-bottom: 10px;     
 }
 .product-info .buy-btn:hover {
-    background: var(--neon-blue);    
+    background: var(--neon-blue);       
     color: var(--bg-dark);
     box-shadow: 0 0 10px var(--neon-blue);
     transform: translateY(-2px);
@@ -275,8 +281,8 @@ body {
     padding: 0 10px;
 }
 .category-btn {
-    background: rgba(0, 0, 0, 0.7);    
-    border: 1px solid rgba(255, 255, 255, 0.2);    
+    background: rgba(0, 0, 0, 0.7);     
+    border: 1px solid rgba(255, 255, 255, 0.2);     
     color: var(--text-light);
     padding: 8px 15px;
     border-radius: 20px;    
@@ -293,9 +299,106 @@ body {
     transform: scale(1.05);
 }
 
+/* -------------------------------------- */
+/* 5. MENÚ LATERAL MÓVIL (NUEVO) */
+/* -------------------------------------- */
+#mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px; /* Ancho del menú */
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    border-right: 2px solid var(--neon-blue);
+    z-index: 2000;
+    padding: 60px 20px 20px;
+    /* Transición para el efecto de deslizamiento */
+    transform: translateX(-100%); 
+    transition: transform 0.3s ease-out;
+    /* Evita que se vea mientras está cerrado */
+    display: flex;
+    flex-direction: column;
+}
+
+#mobile-menu.visible {
+    transform: translateX(0); /* Se desliza hacia la izquierda */
+}
+
+#mobile-menu .close-modal-btn {
+    top: 10px;
+    right: 10px;
+    color: var(--neon-red);
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.nav-link-mobile {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s;
+}
+
+.nav-link-mobile.active {
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+.nav-link-mobile:hover {
+    color: var(--neon-violet);
+}
 
 /* -------------------------------------- */
-/* 5. FOOTER (Descripción) */
+/* 6. BOTONES FLOTANTES DE CONTACTO (NUEVO) */
+/* -------------------------------------- */
+/* Por defecto, oculto en escritorio */
+#contact-float-container {
+    display: none; 
+}
+
+.contact-float-btn {
+    position: fixed;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: var(--text-light);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 2100;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.contact-float-btn:hover {
+    transform: scale(1.1);
+}
+
+.whatsapp-float-btn {
+    bottom: 120px; /* Más arriba que el de música */
+    background-color: #25D366;
+    box-shadow: 0 0 15px #25D366;
+}
+
+.instagram-float-btn {
+    bottom: 60px; /* Justo debajo de WhatsApp */
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #405ded 90%);
+    box-shadow: 0 0 15px #d6249f;
+}
+
+
+/* -------------------------------------- */
+/* 7. FOOTER (Descripción) */
 /* -------------------------------------- */
 #main-footer {
     width: 100%;
@@ -304,11 +407,11 @@ body {
     /* Fondo semi-transparente */
     background: rgba(0, 0, 0, 0.8);
     border-top: 1px solid var(--neon-violet);
-    text-align: center;    
+    text-align: center;     
 }
 #footer-content {
     max-width: 800px;
-    margin: 0 auto;    
+    margin: 0 auto;     
 }
 #footer-logo {
     max-width: 100px;
@@ -319,13 +422,13 @@ body {
     font-size: 0.9em;
     line-height: 1.6;
     color: #bbb;
-    text-align: left;    
+    text-align: left;       
     white-space: pre-wrap;
 }
 
 
 /* -------------------------------------- */
-/* 6. ESTILO DE CONTACTO */
+/* 8. ESTILO DE CONTACTO */
 /* -------------------------------------- */
 .contact-links-grid {
     display: flex;
@@ -346,13 +449,13 @@ body {
     font-weight: bold;
     transition: all 0.3s;
     font-size: 1.1em;
-    color: var(--bg-dark);    
+    color: var(--bg-dark);      
 }
 .contact-btn i {
     font-size: 1.5em;
 }
 .whatsapp-btn {
-    background: #25D366;    
+    background: #25D366;        
     border: 2px solid #128C7E;
     color: var(--bg-dark);
 }
@@ -363,7 +466,7 @@ body {
 .instagram-btn {
     background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
     border: 2px solid #5851db;
-    color: var(--text-light);    
+    color: var(--text-light);       
 }
 .instagram-btn:hover {
     box-shadow: 0 0 15px #dc2743;
@@ -372,13 +475,13 @@ body {
 
 
 /* -------------------------------------- */
-/* 7. MÚSICA FLOTANTE, MODALES, ETC. */
+/* 9. MÚSICA FLOTANTE, MODALES, ETC. */
 /* -------------------------------------- */
 #music-float-container {
     position: fixed;
-    bottom: 30px;    
-    right: 30px;    
-    z-index: 2500;    
+    bottom: 30px;       
+    right: 30px;        
+    z-index: 2500;      
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -407,10 +510,10 @@ body {
     width: 300px;
     transform-origin: bottom right;
     transition: transform 0.3s ease-out;
-    display: flex;    
+    display: flex;      
 }
 #music-player-bar.closed {
-    display: none;    
+    display: none;      
 }
 
 /* Estilos de Botones Neón para Modales (Estética de Checkout) */
@@ -455,19 +558,19 @@ body {
 
 /* Estilos de Modales */
 .modal {
-    display: none;    
-    position: fixed;    
+    display: none;      
+    position: fixed;        
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border: 2px solid var(--neon-red);
     box-shadow: 0 0 20px rgba(255, 0, 92, 0.8);
-    padding: 30px 40px;    
-    max-width: 500px;    
+    padding: 30px 40px;     
+    max-width: 500px;       
     width: 90%;
     z-index: 2000;
-    overflow: hidden;    
-    background-color: var(--bg-dark);    
+    overflow: hidden;       
+    background-color: var(--bg-dark);       
 }
 
 /* Clase que MUESTRA el modal */
@@ -478,7 +581,7 @@ body {
 /* FONDO ESPECÍFICO DEL MODAL DEL CARRITO */
 #cart-modal {
     /* === CORRECCIÓN DE RUTA CLAVE (../ para salir de styles/) === */
-    background-image: url('../images/fondo_carrito.jpg') !important;    
+    background-image: url('../images/fondo_carrito.jpg') !important;     
     
     background-size: cover;
     background-position: center;
@@ -493,22 +596,22 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.75);    
-    z-index: -1;    
-    border-radius: 4px;    
+    background: rgba(0, 0, 0, 0.75);        
+    z-index: -1;        
+    border-radius: 4px;     
 }
 /* Aseguramos que el contenido esté por encima del overlay */
-#cart-modal h2,    
-#cart-items-list,    
-#cart-summary,    
+#cart-modal h2,      
+#cart-items-list,       
+#cart-summary,      
 #open-checkout-modal-btn {
     position: relative;
-    z-index: 1;    
+    z-index: 1;     
 }
 
 /* El modal de checkout solo necesita el color de fondo base (sin imagen) */
 #checkout-modal {
-    background: var(--bg-dark);    
+    background: var(--bg-dark);     
 }
 
 /* ESTILO DEL BOTÓN DE CIERRE (X) - MEJORA ESTÉTICA */
@@ -518,13 +621,13 @@ body {
     right: 15px;
     background: none;
     border: none;
-    color: var(--neon-violet);    
+    color: var(--neon-violet);      
     font-size: 2em;
-    font-weight: 300;    
+    font-weight: 300;       
     cursor: pointer;
     text-shadow: 0 0 8px var(--neon-violet);
     transition: all 0.2s ease-in-out;
-    line-height: 1;    
+    line-height: 1;     
     padding: 0;
 }
 .close-modal-btn:hover {
@@ -559,10 +662,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--neon-violet);    
-    padding: 12px 0;    
+    border-bottom: 1px solid var(--neon-violet);        
+    padding: 12px 0;        
     font-size: 0.95em;
-    position: relative;    
+    position: relative;      
     z-index: 1;
 }
 .cart-item p {
@@ -595,7 +698,7 @@ body {
     z-index: 1;
 }
 #cart-summary span {
-    color: var(--neon-red);    
+    color: var(--neon-red);     
 }
 
 /* Formulario de Checkout */
@@ -609,36 +712,46 @@ body {
     border-radius: 4px;
 }
 #checkout-modal h2 {
-    color: var(--neon-orange);    
+    color: var(--neon-orange);      
 }
 
 /* ====================================== */
-/* 8. MEDIA QUERIES (RESPONSIVE DESIGN) */
+/* 10. MEDIA QUERIES (RESPONSIVE DESIGN) */
 /* ====================================== */
 
 @media (max-width: 768px) {
-    /* 1. BARRA SUPERIOR (TOP-BAR) */
+    /* 1. BARRA SUPERIOR (TOP-BAR) - MOVIL */
     #top-bar {
-        flex-wrap: wrap; 
-        height: auto; 
-        min-height: var(--top-bar-height); 
+        /* Desactivamos el justify-content para controlar mejor la posición del logo, menú y carrito */
+        justify-content: space-between; 
         padding: 10px 10px; 
     }
 
-    .top-bar-logo {
-        height: 35px; 
+    /* 🆕 MOSTRAR BOTÓN DE HAMBURGUESA */
+    #menu-toggle-btn {
+        display: block; /* Muestra el botón de hamburguesa */
+        order: 2; /* Lo coloca después del logo */
     }
 
-    /* Ocultamos los enlaces del centro para liberar espacio en el menú superior */
+    /* Ocultamos los enlaces del centro (navegación de escritorio) */
     .top-nav-center {
         display: none; 
     }
 
-    .top-bar-icon-group {
-        display: flex;
-        gap: 10px;
+    .top-bar-left {
+        order: 1;
     }
     
+    .top-bar-right {
+        order: 3;
+        display: flex; /* Asegura que la búsqueda y el carrito estén alineados */
+        gap: 10px;
+    }
+
+    .top-bar-icon {
+        font-size: 1.4em; /* Iconos un poco más grandes para tocar */
+    }
+
     /* 2. HEADER Y TÍTULOS */
     .header-logo-container {
         padding: 40px 0 30px; 
@@ -663,17 +776,35 @@ body {
     #category-filter-buttons {
         gap: 10px;
         margin-bottom: 20px;
+        /* Permite el scroll horizontal si hay muchos botones */
+        overflow-x: auto; 
+        white-space: nowrap;
+        justify-content: flex-start; /* Alinea al inicio para que el scroll funcione mejor */
+        padding-bottom: 10px; /* Espacio para la sombra de scroll */
     }
     .category-btn {
         padding: 6px 12px;
         font-size: 0.8em;
     }
 
-    /* 5. MÚSICA Y MODALES FLOTANTES */
+    /* 5. BOTONES FLOTANTES DE CONTACTO (MOSTRAR EN MÓVIL) */
+    #contact-float-container {
+        display: block; /* Muestra el contenedor */
+    }
+
+    /* Para que no choquen con los botones de música */
     #music-float-container {
         bottom: 10px; 
         right: 10px;
+        z-index: 2501; /* Asegura que estén encima de los de contacto */
     }
+    .whatsapp-float-btn {
+        bottom: 120px; 
+    }
+    .instagram-float-btn {
+        bottom: 60px;
+    }
+    
     #music-player-bar {
         width: 250px; 
         padding: 8px 10px;
