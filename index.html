@@ -18,6 +18,10 @@
         <div class="top-bar-left">
             <img src="images/logo.png" alt="UrbanFeed Logo" class="top-bar-logo">
         </div>
+
+        <button id="menu-toggle-btn" class="top-bar-icon" data-color="blue" aria-label="Abrir Menú">
+            <i class="fas fa-bars"></i>
+        </button>
         
         <nav class="nav-links top-nav-center">
             <a href="#" class="nav-link active" data-target="INICIO">Inicio</a>
@@ -28,7 +32,7 @@
         
         <div class="top-bar-right">
              <button id="search-btn-top" class="top-bar-icon" data-color="violet" aria-label="Buscar"><i class="fas fa-search"></i></button>
-            <button id="cart-float-btn-top" class="top-bar-icon" data-color="red" aria-label="Abrir Carrito">
+            <button id="cart-icon-btn" class="top-bar-icon" data-color="red" aria-label="Abrir Carrito">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cart-count">0</span>
             </button>
@@ -121,9 +125,18 @@ PIEZAS ÚNICAS, CON HISTORIA Y DISEÑO, PENSADAS PARA QUIENES BUSCAN DESTACARSE.
         
     </main>
     
+    <nav id="mobile-menu" class="closed">
+        <button id="close-mobile-menu-btn" class="close-modal-btn" aria-label="Cerrar Menú">&times;</button>
+        <div class="mobile-nav-links">
+            <a href="#" class="nav-link-mobile" data-target="INICIO">INICIO</a>
+            <a href="#" class="nav-link-mobile" data-target="CATÁLOGO">CATÁLOGO</a>
+            <a href="#" class="nav-link-mobile" data-target="LIQUIDACIÓN">LIQUIDACIÓN</a>
+            <a href="#" class="nav-link-mobile" data-target="CONTACTO">CONTACTO</a>
+        </div>
+    </nav>
     
     <div id="cart-modal" class="modal closed">
-        <button class="close-modal-btn" data-modal="cart-modal">&times;</button>
+        <button class="close-modal-btn" data-modal="cart-modal" aria-label="Cerrar Carrito">&times;</button>
         <h2 data-color="red">Tu Carrito UrbanFeed</h2>
         <div id="cart-items-list" class="cart-items-list"></div>
         <div id="cart-summary">
@@ -135,7 +148,7 @@ PIEZAS ÚNICAS, CON HISTORIA Y DISEÑO, PENSADAS PARA QUIENES BUSCAN DESTACARSE.
     </div>
     
     <div id="checkout-modal" class="modal closed">
-        <button class="close-modal-btn" data-modal="checkout-modal">&times;</button>
+        <button class="close-modal-btn" data-modal="checkout-modal" aria-label="Cerrar Checkout">&times;</button>
         <h2 data-color="orange">Tus Datos para el Pedido</h2>
         <p>Necesitamos estos datos para generar el mensaje de compra por WhatsApp:</p>
         <form id="checkout-form">
@@ -149,23 +162,32 @@ PIEZAS ÚNICAS, CON HISTORIA Y DISEÑO, PENSADAS PARA QUIENES BUSCAN DESTACARSE.
         </form>
     </div>
     
-   <div id="music-float-container">
-    <button id="music-toggle-btn" aria-label="Toggle Music Player">
-        <i class="fas fa-volume-up"></i>
-    </button>
-    
-    <div id="music-player-bar" class="closed">
-        <audio id="background-music" preload="auto"> 
-            Tu navegador no soporta el elemento de audio.
-        </audio>
-        
-        <span style="flex-grow: 1;">Música Neón</span>
-        
-        <button id="next-song-btn" class="top-bar-icon" style="font-size: 1em; padding: 0;" aria-label="Siguiente Canción">
-            <i class="fas fa-step-forward"></i>
-        </button>
+    <div id="contact-float-container">
+        <a href="https://wa.me/5493413688248" target="_blank" class="contact-float-btn whatsapp-float-btn" title="Contactar por WhatsApp" aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://www.instagram.com/urban_feed1/" target="_blank" class="contact-float-btn instagram-float-btn" title="Síguenos en Instagram" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
     </div>
-</div>
+
+    <div id="music-float-container">
+        <button id="music-toggle-btn" aria-label="Toggle Music Player">
+            <i class="fas fa-volume-up"></i>
+        </button>
+        
+        <div id="music-player-bar" class="closed">
+            <audio id="background-music" preload="auto"> 
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+            
+            <span style="flex-grow: 1;">Música Neón</span>
+            
+            <button id="next-song-btn" class="top-bar-icon" style="font-size: 1em; padding: 0;" aria-label="Siguiente Canción">
+                <i class="fas fa-step-forward"></i>
+            </button>
+        </div>
+    </div>
 
     <div id="overlay" class="closed"></div> 
     <div id="cart-notification" class="closed"></div>
