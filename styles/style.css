@@ -33,10 +33,15 @@ body {
     
     color: var(--text-light);
     min-height: 100vh;
-    display: flex; 
+    display: flex;    
     flex-direction: column;
-    overflow-x: hidden; 
+    /* ✅ Mantiene el scroll horizontal oculto */
+    overflow-x: hidden;    
     padding-top: var(--top-bar-height); 
+    
+    /* 🛠️ CORRECCIÓN DE MÓVIL (Asegura que el body ocupe 100% y no haya márgenes residuales) */
+    width: 100%;
+    margin: 0;
 }
 
 /* CLASE CRUCIAL PARA OCULTAR (SPA) */
@@ -51,29 +56,29 @@ body {
 #top-bar {
     position: fixed;
     top: 0;
-    left: 0; 
-    width: 100%; 
+    left: 0;    
+    width: 100%;    
     height: var(--top-bar-height);
     /* Fondo semi-transparente para ver el fondo principal */
     background: rgba(6, 161, 233, 0.322);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 1000; 
+    z-index: 1000;    
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;    
     align-items: center;
-    padding: 0 20px; 
+    padding: 0 20px;    
 }
 .top-bar-logo {
-    height: 40px; 
+    height: 40px;    
     width: auto;
     filter: drop-shadow(0 0 5px var(--neon-blue));
-    position: relative; 
-    z-index: 1001; 
+    position: relative;    
+    z-index: 1001;    
 }
 .top-nav-center {
     display: flex;
     justify-content: center;
-    flex-grow: 1; 
+    flex-grow: 1;    
     gap: 30px;
 }
 .top-nav-center .nav-link {
@@ -155,11 +160,12 @@ body {
 #main-content {
     flex-grow: 1;
     padding: 20px;
-    max-width: 100%; 
-    z-index: 1; 
+    max-width: 100%;    
+    width: 100%; /* 🛠️ CORRECCIÓN: Asegura que ocupe todo el ancho disponible */
+    z-index: 1;    
     
     /* Corrección: Permite que el fondo del body se vea */
-    background-color: transparent; 
+    background-color: transparent;    
 }
 .main-header {
     text-align: center;
@@ -167,7 +173,7 @@ body {
 .header-logo-container {
     padding: 80px 0 40px;
     position: relative;
-    z-index: 50; 
+    z-index: 50;    
 }
 .header-logo {
     max-width: 250px;
@@ -197,7 +203,8 @@ body {
 /* -------------------------------------- */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    /* Usa un tamaño mínimo que quepa en un móvil (280px) */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));    
     gap: 30px;
     padding: 20px 0;
     max-width: 1200px;
@@ -205,7 +212,7 @@ body {
 }
 .product-card {
     /* Fondo más opaco para que resalte sobre la imagen de fondo principal */
-    background: rgba(0, 0, 0, 0.85); 
+    background: rgba(0, 0, 0, 0.85);    
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     overflow: hidden;
@@ -218,7 +225,7 @@ body {
 }
 .product-card img {
     width: 100%;
-    height: 250px; 
+    height: 250px;    
     object-fit: cover;
     display: block;
 }
@@ -227,31 +234,31 @@ body {
 }
 .product-info h3 {
     font-size: 1.2em;
-    color: var(--text-light); 
+    color: var(--text-light);    
     margin-bottom: 5px;
 }
 .product-info p {
     font-size: 1.5em;
     font-weight: bold;
-    color: var(--neon-red); 
+    color: var(--neon-red);    
     margin-bottom: 15px;
-    text-shadow: 0 0 5px rgba(255, 0, 92, 0.5); 
+    text-shadow: 0 0 5px rgba(255, 0, 92, 0.5);    
 }
 .product-info .buy-btn {
-    width: 90%; 
+    width: 90%;    
     padding: 10px;
     font-size: 1em;
     font-weight: bold;
-    background: var(--text-light); 
-    color: var(--bg-dark); 
-    border: 2px solid var(--neon-blue); 
+    background: var(--text-light);    
+    color: var(--bg-dark);    
+    border: 2px solid var(--neon-blue);    
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;    
 }
 .product-info .buy-btn:hover {
-    background: var(--neon-blue); 
+    background: var(--neon-blue);    
     color: var(--bg-dark);
     box-shadow: 0 0 10px var(--neon-blue);
     transform: translateY(-2px);
@@ -261,18 +268,18 @@ body {
 /* ESTILO DE BOTONES DE FILTRO DEL CATÁLOGO */
 #category-filter-buttons {
     display: flex;
-    justify-content: center; 
-    flex-wrap: wrap; 
+    justify-content: center;    
+    flex-wrap: wrap;    
     gap: 15px;
     margin-bottom: 40px;
     padding: 0 10px;
 }
 .category-btn {
-    background: rgba(0, 0, 0, 0.7); 
-    border: 1px solid rgba(255, 255, 255, 0.2); 
+    background: rgba(0, 0, 0, 0.7);    
+    border: 1px solid rgba(255, 255, 255, 0.2);    
     color: var(--text-light);
     padding: 8px 15px;
-    border-radius: 20px; 
+    border-radius: 20px;    
     font-size: 0.9em;
     font-weight: bold;
     cursor: pointer;
@@ -297,11 +304,11 @@ body {
     /* Fondo semi-transparente */
     background: rgba(0, 0, 0, 0.8);
     border-top: 1px solid var(--neon-violet);
-    text-align: center; 
+    text-align: center;    
 }
 #footer-content {
     max-width: 800px;
-    margin: 0 auto; 
+    margin: 0 auto;    
 }
 #footer-logo {
     max-width: 100px;
@@ -312,7 +319,7 @@ body {
     font-size: 0.9em;
     line-height: 1.6;
     color: #bbb;
-    text-align: left; 
+    text-align: left;    
     white-space: pre-wrap;
 }
 
@@ -322,7 +329,7 @@ body {
 /* -------------------------------------- */
 .contact-links-grid {
     display: flex;
-    justify-content: center; 
+    justify-content: center;    
     gap: 30px;
     margin-top: 40px;
     max-width: 600px;
@@ -339,13 +346,13 @@ body {
     font-weight: bold;
     transition: all 0.3s;
     font-size: 1.1em;
-    color: var(--bg-dark); 
+    color: var(--bg-dark);    
 }
 .contact-btn i {
     font-size: 1.5em;
 }
 .whatsapp-btn {
-    background: #25D366; 
+    background: #25D366;    
     border: 2px solid #128C7E;
     color: var(--bg-dark);
 }
@@ -356,7 +363,7 @@ body {
 .instagram-btn {
     background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
     border: 2px solid #5851db;
-    color: var(--text-light); 
+    color: var(--text-light);    
 }
 .instagram-btn:hover {
     box-shadow: 0 0 15px #dc2743;
@@ -369,9 +376,9 @@ body {
 /* -------------------------------------- */
 #music-float-container {
     position: fixed;
-    bottom: 30px; 
-    right: 30px; 
-    z-index: 2500; 
+    bottom: 30px;    
+    right: 30px;    
+    z-index: 2500;    
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -400,10 +407,10 @@ body {
     width: 300px;
     transform-origin: bottom right;
     transition: transform 0.3s ease-out;
-    display: flex; 
+    display: flex;    
 }
 #music-player-bar.closed {
-    display: none; 
+    display: none;    
 }
 
 /* Estilos de Botones Neón para Modales (Estética de Checkout) */
@@ -448,19 +455,19 @@ body {
 
 /* Estilos de Modales */
 .modal {
-    display: none; 
-    position: fixed; 
+    display: none;    
+    position: fixed;    
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border: 2px solid var(--neon-red);
     box-shadow: 0 0 20px rgba(255, 0, 92, 0.8);
-    padding: 30px 40px; 
-    max-width: 500px; 
+    padding: 30px 40px;    
+    max-width: 500px;    
     width: 90%;
     z-index: 2000;
-    overflow: hidden; 
-    background-color: var(--bg-dark); 
+    overflow: hidden;    
+    background-color: var(--bg-dark);    
 }
 
 /* Clase que MUESTRA el modal */
@@ -471,7 +478,7 @@ body {
 /* FONDO ESPECÍFICO DEL MODAL DEL CARRITO */
 #cart-modal {
     /* === CORRECCIÓN DE RUTA CLAVE (../ para salir de styles/) === */
-    background-image: url('../images/fondo_carrito.jpg') !important; 
+    background-image: url('../images/fondo_carrito.jpg') !important;    
     
     background-size: cover;
     background-position: center;
@@ -486,22 +493,22 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.75); 
-    z-index: -1; 
-    border-radius: 4px; 
+    background: rgba(0, 0, 0, 0.75);    
+    z-index: -1;    
+    border-radius: 4px;    
 }
 /* Aseguramos que el contenido esté por encima del overlay */
-#cart-modal h2, 
-#cart-items-list, 
-#cart-summary, 
+#cart-modal h2,    
+#cart-items-list,    
+#cart-summary,    
 #open-checkout-modal-btn {
     position: relative;
-    z-index: 1; 
+    z-index: 1;    
 }
 
 /* El modal de checkout solo necesita el color de fondo base (sin imagen) */
 #checkout-modal {
-    background: var(--bg-dark); 
+    background: var(--bg-dark);    
 }
 
 /* ESTILO DEL BOTÓN DE CIERRE (X) - MEJORA ESTÉTICA */
@@ -511,13 +518,13 @@ body {
     right: 15px;
     background: none;
     border: none;
-    color: var(--neon-violet); 
+    color: var(--neon-violet);    
     font-size: 2em;
-    font-weight: 300; 
+    font-weight: 300;    
     cursor: pointer;
     text-shadow: 0 0 8px var(--neon-violet);
     transition: all 0.2s ease-in-out;
-    line-height: 1; 
+    line-height: 1;    
     padding: 0;
 }
 .close-modal-btn:hover {
@@ -552,10 +559,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--neon-violet); 
-    padding: 12px 0; 
+    border-bottom: 1px solid var(--neon-violet);    
+    padding: 12px 0;    
     font-size: 0.95em;
-    position: relative; 
+    position: relative;    
     z-index: 1;
 }
 .cart-item p {
@@ -588,7 +595,7 @@ body {
     z-index: 1;
 }
 #cart-summary span {
-    color: var(--neon-red); 
+    color: var(--neon-red);    
 }
 
 /* Formulario de Checkout */
@@ -602,9 +609,9 @@ body {
     border-radius: 4px;
 }
 #checkout-modal h2 {
-    color: var(--neon-orange); 
-
+    color: var(--neon-orange);    
 }
+
 /* ====================================== */
 /* 8. MEDIA QUERIES (RESPONSIVE DESIGN) */
 /* ====================================== */
@@ -612,25 +619,21 @@ body {
 @media (max-width: 768px) {
     /* 1. BARRA SUPERIOR (TOP-BAR) */
     #top-bar {
-        /* Permite que los elementos se envuelvan si no caben */
         flex-wrap: wrap; 
-        /* Aumentamos la altura de la barra para que quepa el menú */
         height: auto; 
-        min-height: var(--top-bar-height); /* Aseguramos la altura mínima */
-        padding: 10px 10px; /* Reducimos el padding */
+        min-height: var(--top-bar-height); 
+        padding: 10px 10px; 
     }
 
     .top-bar-logo {
-        height: 35px; /* Reducimos el tamaño del logo */
+        height: 35px; 
     }
 
-    /* Ocultamos los enlaces del centro para liberar espacio */
+    /* Ocultamos los enlaces del centro para liberar espacio en el menú superior */
     .top-nav-center {
         display: none; 
-        /* Si quieres un menú de hamburguesa, aquí lo implementas */
     }
 
-    /* Reubicamos los íconos de la derecha */
     .top-bar-icon-group {
         display: flex;
         gap: 10px;
@@ -638,56 +641,15 @@ body {
     
     /* 2. HEADER Y TÍTULOS */
     .header-logo-container {
-        padding: 40px 0 30px; /* Reducimos el padding superior */
+        padding: 40px 0 30px; 
     }
     .slogan-header {
-        font-size: 2em; /* Reducimos el tamaño de la fuente del slogan */
+        font-size: 2em; 
     }
     
     /* 3. GRID DE PRODUCTOS (¡CLAVE!) */
     .product-grid {
-        /* Le decimos que el grid puede usar una columna de 100% */
-        grid-template-columns: 1fr; 
+        grid-template-columns: 1fr; /* Una sola columna en móvil */
         gap: 20px;
         padding: 10px;
-    }
-    .product-card {
-        max-width: 95%; /* Aseguramos que no se exceda el ancho */
-        margin: 0 auto; /* Centramos las tarjetas */
-    }
-
-    /* 4. BOTONES DE FILTRO */
-    #category-filter-buttons {
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-    .category-btn {
-        padding: 6px 12px;
-        font-size: 0.8em;
-    }
-
-    /* 5. MÚSICA Y MODALES FLOTANTES */
-    #music-float-container {
-        bottom: 10px; /* Movemos la música más abajo */
-        right: 10px;
-    }
-    #music-player-bar {
-        width: 250px; /* Hacemos la barra de música más estrecha */
-        padding: 8px 10px;
-    }
-    .modal {
-        width: 95%; /* Hacemos que los modales ocupen casi todo el ancho */
-        padding: 20px;
-    }
-    
-    /* 6. CONTACTO */
-    .contact-links-grid {
-        flex-direction: column; /* Apilamos los botones de contacto */
-        gap: 15px;
-    }
-    .contact-btn {
-        width: 90%;
-        margin: 0 auto;
-        justify-content: center; /* Centramos el contenido dentro del botón */
-    }
-}
+        width: 100%; /* Asegura que la grilla ocupe todo el ancho */
