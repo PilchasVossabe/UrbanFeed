@@ -1,0 +1,606 @@
+/* -------------------------------------- */
+/* 1. Reset Básico y Variables Neón */
+/* -------------------------------------- */
+:root {
+    --neon-blue: #00e5ff;
+    --neon-violet: #8c00ff;
+    --neon-red: #ff005c;
+    --neon-orange: #ff7b00;
+    
+    --bg-dark: #0a0a0a; 
+    --text-light: #f0f0f0; 
+
+    --font-primary: 'Montserrat', sans-serif;
+    --font-logo: 'Monoton', cursive;
+    --top-bar-height: 60px; 
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-primary);
+}
+body {
+    background-color: var(--bg-dark);
+    
+    /* === CORRECCIÓN DE RUTA CLAVE (../ para salir de styles/) === */
+    background-image: url('../images/fondo_principal.jpg') !important; 
+    
+    background-size: cover; 
+    background-position: center center; 
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column;
+    overflow-x: hidden; 
+    padding-top: var(--top-bar-height); 
+}
+
+/* CLASE CRUCIAL PARA OCULTAR (SPA) */
+.closed {
+    display: none !important; 
+}
+
+
+/* -------------------------------------- */
+/* 2. BARRA SUPERIOR (TOP-BAR) */
+/* -------------------------------------- */
+#top-bar {
+    position: fixed;
+    top: 0;
+    left: 0; 
+    width: 100%; 
+    height: var(--top-bar-height);
+    /* Fondo semi-transparente para ver el fondo principal */
+    background: rgba(6, 161, 233, 0.322);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000; 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0 20px; 
+}
+.top-bar-logo {
+    height: 40px; 
+    width: auto;
+    filter: drop-shadow(0 0 5px var(--neon-blue));
+    position: relative; 
+    z-index: 1001; 
+}
+.top-nav-center {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1; 
+    gap: 30px;
+}
+.top-nav-center .nav-link {
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 5px 10px;
+    font-size: 1em;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+.top-nav-center .nav-link.active {
+    color: var(--neon-red);
+    font-weight: bold;
+    border-bottom: 2px solid var(--neon-red);
+}
+.top-bar-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: var(--text-light);
+    transition: color 0.2s, box-shadow 0.2s;
+    padding: 5px;
+    position: relative;
+}
+.top-bar-icon[data-color="violet"]:hover { color: var(--neon-violet); }
+.top-bar-icon[data-color="red"]:hover { color: var(--neon-red); }
+#cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--neon-red);
+    color: var(--bg-dark);
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.7em;
+    font-weight: bold;
+    box-shadow: 0 0 5px var(--neon-red);
+}
+
+
+/* BARRA DE BÚSQUEDA (OVERLAY) */
+#search-overlay {
+    position: absolute;
+    top: var(--top-bar-height);
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    z-index: 999;
+}
+#product-search-input {
+    width: 80%;
+    max-width: 600px;
+    padding: 10px 15px;
+    border: 2px solid var(--neon-blue);
+    background: var(--bg-dark);
+    color: var(--text-light);
+    border-radius: 4px;
+    font-size: 1em;
+}
+#close-search-btn {
+    background: none;
+    border: none;
+    color: var(--neon-red);
+    font-size: 2em;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+
+/* -------------------------------------- */
+/* 3. CONTENIDO PRINCIPAL Y HEADER */
+/* -------------------------------------- */
+#main-content {
+    flex-grow: 1;
+    padding: 20px;
+    max-width: 100%; 
+    z-index: 1; 
+    
+    /* Corrección: Permite que el fondo del body se vea */
+    background-color: transparent; 
+}
+.main-header {
+    text-align: center;
+}
+.header-logo-container {
+    padding: 80px 0 40px;
+    position: relative;
+    z-index: 50; 
+}
+.header-logo {
+    max-width: 250px;
+    filter: drop-shadow(0 0 10px var(--neon-blue));
+}
+.slogan-header {
+    font-size: 3em;
+    font-family: var(--font-logo);
+    text-shadow: 0 0 10px currentColor;
+    margin-top: 10px;
+}
+.slogan-subheader {
+    font-size: 1em;
+    color: #ccc;
+    margin-top: 5px;
+}
+.section-title {
+    font-size: 2em;
+    text-align: center;
+    margin: 60px 0 30px;
+    text-shadow: 0 0 5px currentColor;
+}
+
+
+/* -------------------------------------- */
+/* 4. GRID DE PRODUCTOS (Estética Profesional) */
+/* -------------------------------------- */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 30px;
+    padding: 20px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.product-card {
+    /* Fondo más opaco para que resalte sobre la imagen de fondo principal */
+    background: rgba(0, 0, 0, 0.85); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px var(--neon-violet);
+}
+.product-card img {
+    width: 100%;
+    height: 250px; 
+    object-fit: cover;
+    display: block;
+}
+.product-info {
+    padding: 15px;
+}
+.product-info h3 {
+    font-size: 1.2em;
+    color: var(--text-light); 
+    margin-bottom: 5px;
+}
+.product-info p {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--neon-red); 
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px rgba(255, 0, 92, 0.5); 
+}
+.product-info .buy-btn {
+    width: 90%; 
+    padding: 10px;
+    font-size: 1em;
+    font-weight: bold;
+    background: var(--text-light); 
+    color: var(--bg-dark); 
+    border: 2px solid var(--neon-blue); 
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 10px; 
+}
+.product-info .buy-btn:hover {
+    background: var(--neon-blue); 
+    color: var(--bg-dark);
+    box-shadow: 0 0 10px var(--neon-blue);
+    transform: translateY(-2px);
+}
+
+
+/* ESTILO DE BOTONES DE FILTRO DEL CATÁLOGO */
+#category-filter-buttons {
+    display: flex;
+    justify-content: center; 
+    flex-wrap: wrap; 
+    gap: 15px;
+    margin-bottom: 40px;
+    padding: 0 10px;
+}
+.category-btn {
+    background: rgba(0, 0, 0, 0.7); 
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    color: var(--text-light);
+    padding: 8px 15px;
+    border-radius: 20px; 
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.category-btn.active,
+.category-btn:hover {
+    background: var(--neon-violet);
+    color: var(--bg-dark);
+    box-shadow: 0 0 10px var(--neon-violet);
+    transform: scale(1.05);
+}
+
+
+/* -------------------------------------- */
+/* 5. FOOTER (Descripción) */
+/* -------------------------------------- */
+#main-footer {
+    width: 100%;
+    margin-top: 80px;
+    padding: 40px 20px;
+    /* Fondo semi-transparente */
+    background: rgba(0, 0, 0, 0.8);
+    border-top: 1px solid var(--neon-violet);
+    text-align: center; 
+}
+#footer-content {
+    max-width: 800px;
+    margin: 0 auto; 
+}
+#footer-logo {
+    max-width: 100px;
+    filter: drop-shadow(0 0 5px var(--neon-red));
+    margin-bottom: 20px;
+}
+.footer-text {
+    font-size: 0.9em;
+    line-height: 1.6;
+    color: #bbb;
+    text-align: left; 
+    white-space: pre-wrap;
+}
+
+
+/* -------------------------------------- */
+/* 6. ESTILO DE CONTACTO */
+/* -------------------------------------- */
+.contact-links-grid {
+    display: flex;
+    justify-content: center; 
+    gap: 30px;
+    margin-top: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.contact-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+    font-size: 1.1em;
+    color: var(--bg-dark); 
+}
+.contact-btn i {
+    font-size: 1.5em;
+}
+.whatsapp-btn {
+    background: #25D366; 
+    border: 2px solid #128C7E;
+    color: var(--bg-dark);
+}
+.whatsapp-btn:hover {
+    box-shadow: 0 0 15px #25D366;
+    transform: translateY(-3px);
+}
+.instagram-btn {
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+    border: 2px solid #5851db;
+    color: var(--text-light); 
+}
+.instagram-btn:hover {
+    box-shadow: 0 0 15px #dc2743;
+    transform: translateY(-3px);
+}
+
+
+/* -------------------------------------- */
+/* 7. MÚSICA FLOTANTE, MODALES, ETC. */
+/* -------------------------------------- */
+#music-float-container {
+    position: fixed;
+    bottom: 30px; 
+    right: 30px; 
+    z-index: 2500; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+#music-toggle-btn {
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--neon-blue);
+    color: var(--neon-blue);
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 10px 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--neon-blue);
+    transition: all 0.3s;
+}
+#music-player-bar {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid var(--neon-blue);
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 0 10px var(--neon-blue);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 300px;
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+    display: flex; 
+}
+#music-player-bar.closed {
+    display: none; 
+}
+
+/* Estilos de Botones Neón para Modales (Estética de Checkout) */
+.neon-btn {
+    padding: 12px 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+}
+.neon-btn[data-color="blue"] {
+    background: var(--neon-blue);
+    color: var(--bg-dark);
+    box-shadow: 0 0 10px var(--neon-blue);
+}
+.neon-btn[data-color="red"] {
+    background: var(--neon-red);
+    color: var(--text-light);
+    box-shadow: 0 0 10px var(--neon-red);
+    border: 2px solid var(--neon-red);
+}
+.neon-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+.neon-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+#cart-modal .neon-btn {
+    margin-top: 15px;
+    width: 100%;
+}
+#checkout-form .neon-btn {
+    margin-top: 15px;
+    width: 100%;
+}
+
+/* Estilos de Modales */
+.modal {
+    display: none; 
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid var(--neon-red);
+    box-shadow: 0 0 20px rgba(255, 0, 92, 0.8);
+    padding: 30px 40px; 
+    max-width: 500px; 
+    width: 90%;
+    z-index: 2000;
+    overflow: hidden; 
+    background-color: var(--bg-dark); 
+}
+
+/* Clase que MUESTRA el modal */
+.modal.visible {
+    display: block;
+}
+
+/* FONDO ESPECÍFICO DEL MODAL DEL CARRITO */
+#cart-modal {
+    /* === CORRECCIÓN DE RUTA CLAVE (../ para salir de styles/) === */
+    background-image: url('../images/fondo_carrito.jpg') !important; 
+    
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* OVERLAY OSCURO PARA EL CARRITO (Para legibilidad) */
+#cart-modal::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75); 
+    z-index: -1; 
+    border-radius: 4px; 
+}
+/* Aseguramos que el contenido esté por encima del overlay */
+#cart-modal h2, 
+#cart-items-list, 
+#cart-summary, 
+#open-checkout-modal-btn {
+    position: relative;
+    z-index: 1; 
+}
+
+/* El modal de checkout solo necesita el color de fondo base (sin imagen) */
+#checkout-modal {
+    background: var(--bg-dark); 
+}
+
+/* ESTILO DEL BOTÓN DE CIERRE (X) - MEJORA ESTÉTICA */
+.close-modal-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--neon-violet); 
+    font-size: 2em;
+    font-weight: 300; 
+    cursor: pointer;
+    text-shadow: 0 0 8px var(--neon-violet);
+    transition: all 0.2s ease-in-out;
+    line-height: 1; 
+    padding: 0;
+}
+.close-modal-btn:hover {
+    color: var(--neon-red);
+    text-shadow: 0 0 10px var(--neon-red), 0 0 20px rgba(255, 0, 92, 0.5);
+    transform: scale(1.1);
+}
+
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1999;
+}
+#overlay.visible {
+    display: block;
+}
+
+/* Contenido del Carrito */
+.cart-items-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 10px;
+}
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--neon-violet); 
+    padding: 12px 0; 
+    font-size: 0.95em;
+    position: relative; 
+    z-index: 1;
+}
+.cart-item p {
+    flex-grow: 1;
+    margin-right: 10px;
+    color: var(--text-light);
+}
+.cart-item .remove-item-btn {
+    background: none;
+    border: none;
+    color: var(--neon-red);
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0 5px;
+}
+.cart-item .remove-item-btn:hover {
+    color: red;
+}
+#cart-summary {
+    text-align: right;
+    border-top: 2px solid var(--neon-red);
+    padding-top: 15px;
+    margin-top: 10px;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px rgba(0, 229, 255, 0.5);
+    position: relative;
+    z-index: 1;
+}
+#cart-summary span {
+    color: var(--neon-red); 
+}
+
+/* Formulario de Checkout */
+#checkout-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--neon-blue);
+    color: var(--text-light);
+    border-radius: 4px;
+}
+#checkout-modal h2 {
+    color: var(--neon-orange); 
+}

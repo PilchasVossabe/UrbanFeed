@@ -1,0 +1,273 @@
+// =========================================================
+// DATOS DEL SITIO (Simulamos la base de datos con JS)
+// =========================================================
+
+const MUSIC_FILES = [
+    { title: "Flow Urbano - Track 1", file: "music/track1.mp3" },
+    { title: "Ritmo Callejero - Track 2", file: "music/track2.mp3" },
+    // AÑADE MÁS OBJETOS AQUÍ SI TIENES MÁS CANCIONES:
+    // { title: "Mi Nuevo Beat", file: "music/beat_nuevo.mp3" }, 
+];
+
+const PRODUCTS = [
+    { id: 1, name: "Chaqueta Bomber Street", price: 95.00, color: "Negro", size: "M" },
+    { id: 2, name: "Gorra Snapback Urban", price: 25.00, color: "Violeta", size: "Unica" },
+    { id: 3, name: "Hoodie Neón", price: 70.00, color: "Azul", size: "L" },
+];
+
+// TU NÚMERO DE CONTACTO
+const WHATSAPP_NUMBER = "5493413688248"; 
+
+// =========================================================
+// 1. LÓGICA DE MÚSICA PERSISTENTE
+// =========================================================
+
+const audioPlayer = document.getElementById('audio-player');
+const playPauseBtn = document.getElementById('play-pause-btn');
+const musicPlayerBar = document.getElementById('music-player-bar');
+
+function initMusicPlayer() {
+    const savedState = JSON.parse(localStorage.getItem('urbanfeed_music_state'));
+    let currentTrack = MUSIC_FILES[0]; 
+
+    if (savedState && savedState.track) {
+        currentTrack = MUSIC_FILES.find(t => t.file === savedState.track) || currentTrack;
+    } else {
+        currentTrack = MUSIC_FILES[Math.floor(Math.random() * MUSIC_FILES.length)];
+    }
+
+    audioPlayer.src = currentTrack.file;
+    document.getElementById('current-song').textContent = currentTrack.title;
+    
+    if (savedState && savedState.isPlaying) {
+        audioPlayer.currentTime = savedState.time || 0;
+        audioPlayer.play().catch(e => {
+            console.warn("Autoplay bloqueado. El usuario debe interactuar.");
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        });
+        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    }
+}
+
+window.addEventListener('beforeunload', () => {
+    const stateToSave = {
+        isPlaying: !audioPlayer.paused,
+        time: audioPlayer.currentTime,
+        track: audioPlayer.src.split('/').pop() ? 'music/' + audioPlayer.src.split('/').pop() : ''
+    };
+    localStorage.setItem('urbanfeed_music_state', JSON.stringify(stateToSave));
+});
+
+playPauseBtn.addEventListener('click', () => {
+    if (audioPlayer.paused) {
+        audioPlayer.play();
+        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    } else {
+        audioPlayer.pause();
+        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+    }
+});
+
+document.getElementById('music-float-btn').addEventListener('click', () => {
+    // Alterna la visibilidad de la barra
+    musicPlayerBar.style.display = musicPlayerBar.style.display === 'block' ? 'none' : 'block';
+});
+
+initMusicPlayer();
+
+// =========================================================
+// 2. LÓGICA DE REGISTRO BÁSICO (LOCALSTORAGE)
+// =========================================================
+
+const authModal = document.getElementById('auth-modal');
+const authButton = document.getElementById('auth-button');
+const registerForm = document.getElementById('register-form');
+const loginMessage = document.getElementById('login-message');
+const loginBtn = document.getElementById('login-btn');
+
+function checkUserStatus() {
+    const user = localStorage.getItem('urbanfeed_user');
+    if (user) {
+        const userData = JSON.parse(user);
+        authButton.textContent = `Hola, ${userData.name.split(' ')[0]}!`;
+        authButton.setAttribute('data-color', 'blue');
+        registerForm.style.display = 'none';
+        loginMessage.textContent = '¡Ya has iniciado sesión!';
+        loginBtn.classList.add('closed');
+    } else {
+        authButton.textContent = 'Registrarse / Login';
+        authButton.setAttribute('data-color', 'red');
+        registerForm.style.display = 'block';
+        loginMessage.textContent = '';
+        loginBtn.classList.remove('closed');
+    }
+}
+
+authButton.addEventListener('click', () => {
+    authModal.classList.remove('closed');
+    checkUserStatus();
+});
+
+registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const newUser = {
+        name: document.getElementById('reg-name').value,
+        address: document.getElementById('reg-address').value,
+        contact: document.getElementById('reg-contact').value,
+        email: document.getElementById('reg-email').value,
+    };
+    localStorage.setItem('urbanfeed_user', JSON.stringify(newUser));
+    alert(`¡Registro exitoso para ${newUser.name.split(' ')[0]}!`);
+    authModal.classList.add('closed');
+    checkUserStatus(); 
+});
+
+loginBtn.addEventListener('click', () => {
+    const user = localStorage.getItem('urbanfeed_user');
+    if (user) {
+        alert('Sesión iniciada correctamente.');
+        authModal.classList.add('closed');
+    } else {
+        alert('Debes registrarte primero.');
+        registerForm.style.display = 'block';
+        loginBtn.classList.add('closed');
+    }
+});
+
+checkUserStatus();
+
+// =========================================================
+// 3. LÓGICA DE CARRITO DE COMPRAS Y WHATSAPP
+// =========================================================
+
+const cartModal = document.getElementById('cart-modal');
+const cartItemsList = document.getElementById('cart-items-list');
+const cartTotal = document.getElementById('cart-total');
+const cartCount = document.getElementById('cart-count');
+const closeButtons = document.querySelectorAll('.close-modal-btn');
+
+closeButtons.forEach(btn => btn.addEventListener('click', () => {
+    cartModal.classList.add('closed');
+    authModal.classList.add('closed');
+}));
+
+document.getElementById('cart-float-btn').addEventListener('click', () => {
+    renderCart();
+    cartModal.classList.remove('closed');
+});
+
+function getCart() {
+    return JSON.parse(localStorage.getItem('urbanfeed_cart')) || [];
+}
+
+function saveCart(cart) {
+    localStorage.setItem('urbanfeed_cart', JSON.stringify(cart));
+    const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+    cartCount.textContent = totalQty;
+}
+
+function addToCart(productId) {
+    const product = PRODUCTS.find(p => p.id === productId);
+    let cart = getCart();
+    const existingItemIndex = cart.findIndex(item => item.id === productId);
+
+    if (existingItemIndex > -1) {
+        cart[existingItemIndex].qty += 1;
+    } else {
+        cart.push({ ...product, qty: 1 });
+    }
+    
+    saveCart(cart);
+    alert(`"${product.name}" añadido al carrito.`);
+    renderCart();
+}
+
+function renderCart() {
+    const cart = getCart();
+    let total = 0;
+    cartItemsList.innerHTML = '';
+
+    if (cart.length === 0) {
+        cartItemsList.innerHTML = '<p>El carrito está vacío. ¡Añade el mejor streetwear!</p>';
+    } else {
+        cart.forEach(item => {
+            const itemTotal = item.price * item.qty;
+            total += itemTotal;
+            const itemEl = document.createElement('div');
+            itemEl.classList.add('cart-item');
+            itemEl.innerHTML = `
+                <p><strong>${item.name}</strong> (${item.color})</p>
+                <p>$${item.price} x ${item.qty} = $${itemTotal.toFixed(2)}</p>
+            `;
+            cartItemsList.appendChild(itemEl);
+        });
+    }
+    cartTotal.textContent = `$${total.toFixed(2)}`;
+}
+
+// FUNCIÓN CLAVE: CERRAR COMPRA POR WHATSAPP
+document.getElementById('checkout-whatsapp-btn').addEventListener('click', () => {
+    const cart = getCart();
+    const user = localStorage.getItem('urbanfeed_user');
+    
+    if (cart.length === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+    }
+    
+    let message = "¡Hola UrbanFeed! Quiero hacer el siguiente pedido:\n\n";
+    let subtotal = 0;
+
+    cart.forEach(item => {
+        const itemTotal = item.price * item.qty;
+        subtotal += itemTotal;
+        message += `- ${item.name} | Cant: ${item.qty} | Subtotal: $${itemTotal.toFixed(2)}\n`;
+    });
+    
+    message += `\nTOTAL APROXIMADO: $${subtotal.toFixed(2)}`;
+    
+    if (user) {
+        const userData = JSON.parse(user);
+        message += `\n\nMis datos (pre-registro):\n- Nombre: ${userData.name}\n- Contacto: ${userData.contact}\n- Dirección: ${userData.address}`;
+    } else {
+        message += "\n\n**¡Importante!** No has completado el registro. Por favor, incluye tu Nombre, Dirección y Contacto.";
+    }
+    
+    message += "\n\nPor favor, confírmenme la disponibilidad y los pasos de pago. ¡Gracias!";
+    
+    const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    
+    window.open(whatsappLink, '_blank');
+});
+
+// =========================================================
+// 4. LÓGICA DEL SIDEBAR Y PRODUCTOS DE EJEMPLO
+// =========================================================
+
+document.getElementById('sidebar-toggle').addEventListener('click', () => {
+    const sidebar = document.getElementById('sidebar-nav');
+    const mainContent = document.getElementById('main-content');
+    sidebar.classList.toggle('closed');
+    
+    if (window.innerWidth > 768) {
+        mainContent.classList.toggle('sidebar-closed');
+    }
+});
+
+function renderProducts() {
+    const productList = document.getElementById('product-list');
+    
+    PRODUCTS.forEach(product => {
+        const card = document.createElement('div');
+        card.classList.add('product-card');
+        card.innerHTML = `
+            <h3>${product.name}</h3>
+            <p>$${product.price.toFixed(2)}</p>
+            <button class="neon-btn" data-color="violet" onclick="addToCart(${product.id})">Añadir al Carrito</button>
+        `;
+        productList.appendChild(card);
+    });
+}
+
+renderProducts();
+saveCart(getCart());
