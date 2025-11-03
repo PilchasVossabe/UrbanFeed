@@ -653,3 +653,47 @@ body {
         gap: 20px;
         padding: 10px;
         width: 100%; /* Asegura que la grilla ocupe todo el ancho */
+    }
+    .product-card {
+        max-width: 95%; 
+        margin: 0 auto; 
+    }
+
+    /* 4. BOTONES DE FILTRO */
+    #category-filter-buttons {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .category-btn {
+        padding: 6px 12px;
+        font-size: 0.8em;
+    }
+
+    /* 5. MÚSICA Y MODALES FLOTANTES */
+    #music-float-container {
+        bottom: 10px; 
+        right: 10px;
+    }
+    #music-player-bar {
+        width: 250px; 
+        padding: 8px 10px;
+    }
+    .modal {
+        width: 95%; 
+        padding: 20px;
+    }
+    
+    /* 6. CONTACTO (SOLUCIÓN DEL DESBORDE MÁS PROBABLE) */
+    .contact-links-grid {
+        flex-direction: column; 
+        gap: 15px;
+        width: 100%; /* Asegura que ocupe todo el ancho */
+        padding: 0 10px; /* Padding interno para que no se pegue al borde */
+    }
+    .contact-btn {
+        width: 100%; /* El botón ocupa todo el ancho de la grilla */
+        max-width: 300px; 
+        margin: 0 auto;
+        justify-content: center; 
+    }
+}
