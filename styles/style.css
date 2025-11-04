@@ -110,7 +110,7 @@ body {
 }
 .top-bar-icon[data-color="violet"]:hover { color: var(--neon-violet); }
 .top-bar-icon[data-color="red"]:hover { color: var(--neon-red); }
-.top-bar-icon[data-color="blue"]:hover { color: var(--neon-blue); } /* Añadido hover para el botón de hamburguesa */
+.top-bar-icon[data-color="blue"]:hover { color: var(--neon-blue); } 
 
 #cart-count {
     position: absolute;
@@ -167,7 +167,7 @@ body {
     flex-grow: 1;
     padding: 20px;
     max-width: 100%;    
-    width: 100%; /* 🛠️ CORRECCIÓN: Asegura que ocupe todo el ancho disponible */
+    width: 100%; 
     z-index: 1;     
     
     /* Corrección: Permite que el fondo del body se vea */
@@ -300,7 +300,7 @@ body {
 }
 
 /* -------------------------------------- */
-/* 5. MENÚ LATERAL MÓVIL (NUEVO) */
+/* 5. MENÚ LATERAL MÓVIL */
 /* -------------------------------------- */
 #mobile-menu {
     position: fixed;
@@ -357,7 +357,7 @@ body {
 }
 
 /* -------------------------------------- */
-/* 6. BOTONES FLOTANTES DE CONTACTO (NUEVO) */
+/* 6. BOTONES FLOTANTES DE CONTACTO */
 /* -------------------------------------- */
 /* Por defecto, oculto en escritorio */
 #contact-float-container {
@@ -366,7 +366,7 @@ body {
 
 .contact-float-btn {
     position: fixed;
-    right: 10px;
+    right: 30px; /* Posición de escritorio */
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -385,13 +385,13 @@ body {
 }
 
 .whatsapp-float-btn {
-    bottom: 120px; /* Más arriba que el de música */
+    bottom: 120px; 
     background-color: #25D366;
     box-shadow: 0 0 15px #25D366;
 }
 
 .instagram-float-btn {
-    bottom: 60px; /* Justo debajo de WhatsApp */
+    bottom: 60px; 
     background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #405ded 90%);
     box-shadow: 0 0 15px #d6249f;
 }
@@ -720,36 +720,44 @@ body {
 /* ====================================== */
 
 @media (max-width: 768px) {
+    
     /* 1. BARRA SUPERIOR (TOP-BAR) - MOVIL */
     #top-bar {
-        /* Desactivamos el justify-content para controlar mejor la posición del logo, menú y carrito */
         justify-content: space-between; 
         padding: 10px 10px; 
+        height: var(--top-bar-height); /* Vuelve a fijar la altura */
+        flex-wrap: nowrap; /* Evita que los iconos bajen de línea */
     }
 
-    /* 🆕 MOSTRAR BOTÓN DE HAMBURGUESA */
+    /* 🆕 MOSTRAR BOTÓN DE HAMBURGUESA Y ORDENAR */
     #menu-toggle-btn {
         display: block; /* Muestra el botón de hamburguesa */
-        order: 2; /* Lo coloca después del logo */
+        order: 1; /* Colocar a la izquierda */
+        margin-right: 10px; 
     }
 
+    /* 🆕 CENTRAR LOGO */
+    .top-bar-logo {
+        height: 35px; 
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%); /* Centrado absoluto */
+        order: 2; /* Centrar visualmente */
+    }
+    
     /* Ocultamos los enlaces del centro (navegación de escritorio) */
     .top-nav-center {
         display: none; 
     }
 
-    .top-bar-left {
-        order: 1;
-    }
-    
-    .top-bar-right {
-        order: 3;
-        display: flex; /* Asegura que la búsqueda y el carrito estén alineados */
+    .top-bar-icon-group {
+        display: flex;
         gap: 10px;
+        order: 3; /* Colocar a la derecha */
     }
 
     .top-bar-icon {
-        font-size: 1.4em; /* Iconos un poco más grandes para tocar */
+        font-size: 1.4em; 
     }
 
     /* 2. HEADER Y TÍTULOS */
@@ -765,7 +773,7 @@ body {
         grid-template-columns: 1fr; /* Una sola columna en móvil */
         gap: 20px;
         padding: 10px;
-        width: 100%; /* Asegura que la grilla ocupe todo el ancho */
+        width: 100%; 
     }
     .product-card {
         max-width: 95%; 
@@ -776,39 +784,65 @@ body {
     #category-filter-buttons {
         gap: 10px;
         margin-bottom: 20px;
-        /* Permite el scroll horizontal si hay muchos botones */
         overflow-x: auto; 
         white-space: nowrap;
-        justify-content: flex-start; /* Alinea al inicio para que el scroll funcione mejor */
-        padding-bottom: 10px; /* Espacio para la sombra de scroll */
+        justify-content: flex-start; 
+        padding-bottom: 10px; 
     }
     .category-btn {
         padding: 6px 12px;
         font-size: 0.8em;
     }
 
-    /* 5. BOTONES FLOTANTES DE CONTACTO (MOSTRAR EN MÓVIL) */
+    /* 5. BOTONES FLOTANTES DE CONTACTO Y MÚSICA (CORRECCIÓN) */
+    
+    /* Muestra el contenedor de contacto en móvil */
     #contact-float-container {
-        display: block; /* Muestra el contenedor */
+        display: block; 
+    }
+    
+    /* Ajuste de Posición para todos los botones flotantes */
+    .contact-float-btn {
+        width: 45px; 
+        height: 45px;
+        font-size: 1.3em;
+        right: 15px; /* Más cerca del borde */
     }
 
-    /* Para que no choquen con los botones de música */
-    #music-float-container {
-        bottom: 10px; 
-        right: 10px;
-        z-index: 2501; /* Asegura que estén encima de los de contacto */
-    }
+    /* Posicionamiento final de los botones de contacto */
     .whatsapp-float-btn {
-        bottom: 120px; 
+        bottom: 110px; 
     }
     .instagram-float-btn {
         bottom: 60px;
     }
     
-    #music-player-bar {
-        width: 250px; 
-        padding: 8px 10px;
+    /* Ajuste de posición y tamaño para MÚSICA */
+    #music-float-container {
+        bottom: 10px; /* Más cerca del borde inferior */
+        right: 15px; /* Alinear con los de contacto */
+        gap: 5px; 
+        z-index: 2501; /* Asegura que esté encima de los de contacto */
     }
+
+    /* Botón de música: tamaño y sombra reducidos */
+    #music-toggle-btn {
+        font-size: 1.3em;
+        padding: 8px 10px;
+        box-shadow: 0 0 5px var(--neon-blue); /* Menor brillo */
+        width: 45px; /* Tamaño consistente con los demás */
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Barra de música: reducir ancho y padding */
+    #music-player-bar {
+        width: 220px; 
+        padding: 6px 8px;
+    }
+
     .modal {
         width: 95%; 
         padding: 20px;
@@ -818,11 +852,11 @@ body {
     .contact-links-grid {
         flex-direction: column; 
         gap: 15px;
-        width: 100%; /* Asegura que ocupe todo el ancho */
-        padding: 0 10px; /* Padding interno para que no se pegue al borde */
+        width: 100%; 
+        padding: 0 10px; 
     }
     .contact-btn {
-        width: 100%; /* El botón ocupa todo el ancho de la grilla */
+        width: 100%; 
         max-width: 300px; 
         margin: 0 auto;
         justify-content: center; 
