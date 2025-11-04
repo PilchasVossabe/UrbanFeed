@@ -48,14 +48,30 @@
     <main id="main-content">
         
         <section id="page-inicio" class="content-page">
-            <header class="main-header">
-                <div class="header-logo-container">
-                    <img src="images/logo.png" alt="UrbanFeed Logo Streetwear" class="header-logo">
-                    <h1 class="slogan-header" data-color="blue">Streetwear & Culture</h1>
-                    <p class="slogan-subheader">ENVIO GRATIS EN ROSARIO CON TU COMPRA DE MAS DE $75.000
-                </p>
-                </div>
-            </header>
+         <header id="main-header">
+    <div id="top-bar">
+        <button id="menu-toggle-btn" class="top-bar-icon" aria-label="Abrir Menú">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <img src="images/logo.png" alt="UrbanFeed Logo" class="top-bar-logo">
+
+        <nav class="nav-links top-nav-center">
+            <a href="#" class="nav-link active" data-target="INICIO">Inicio</a>
+            <a href="#" class="nav-link" data-target="CATÁLOGO">Catálogo</a>
+            <a href="#" class="nav-link" data-target="LIQUIDACIÓN">Liquidación</a>
+            <a href="#" class="nav-link" data-target="CONTACTO">Contacto</a>
+        </nav>
+        
+        <div class="top-bar-icon-group">
+            <button id="search-btn-top" class="top-bar-icon" aria-label="Buscar"><i class="fas fa-search"></i></button>
+            <button id="cart-icon-btn" class="top-bar-icon" aria-label="Abrir Carrito">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </button>
+        </div>
+    </div>
+</header>
 
             <h2 class="section-title" data-color="red">PRODUCTOS DESTACADOS</h2>
             <div class="product-grid" id="product-list">
@@ -196,3 +212,4 @@ PIEZAS ÚNICAS, CON HISTORIA Y DISEÑO, PENSADAS PARA QUIENES BUSCAN DESTACARSE.
 </body>
 
 </html>
+
