@@ -2,7 +2,6 @@
 /* 1. VARIABLES BASE & RESET */
 /* ========================================================= */
 :root {
-    /* Colores base (adaptar si usas otros) */
     --color-bg-dark: #121212;
     --color-neon: #00ffff; /* Cian Neón */
     --color-accent: #ff00ff; /* Magenta */
@@ -34,7 +33,6 @@ button {
     font-family: inherit;
 }
 
-/* Estilo para los botones Neon */
 .neon-btn {
     background-color: var(--color-neon);
     color: var(--color-text-dark);
@@ -52,25 +50,42 @@ button {
 
 
 /* ========================================================= */
-/* 2. BARRA SUPERIOR (HEADER) - ESCRITORIO DEFAULT */
+/* 2. BARRA SUPERIOR (HEADER) - ESCRITORIO DEFAULT (3 COLUMNAS) */
 /* ========================================================= */
 #main-header {
     width: 100%;
     position: sticky;
     top: 0;
-    z-index: 1001; /* Alto z-index para la barra fija */
+    z-index: 1001; 
 }
 
 #top-bar {
     display: flex;
-    /* En escritorio: Logo a la izq, Links al centro, Iconos a la derecha */
-    justify-content: space-between;
+    /* Escritorio: Distribuye las tres columnas uniformemente */
+    justify-content: space-between; 
     align-items: center;
     background-color: var(--color-bg-dark);
     padding: 10px 20px;
     border-bottom: 2px solid var(--color-neon);
     position: relative; 
 }
+
+/* Grupos Izquierdo y Derecho (para contener el logo/hamburguesa y los iconos) */
+.top-bar-left, .top-bar-right {
+    display: flex;
+    align-items: center;
+    /* Ancho fijo para equilibrar y evitar que el logo empuje */
+    min-width: 150px; 
+    justify-content: flex-start;
+}
+.top-bar-right {
+    justify-content: flex-end;
+}
+.top-bar-icon-group {
+    display: flex; 
+    gap: 15px;
+}
+
 
 /* Logo */
 .top-bar-logo {
@@ -79,10 +94,17 @@ button {
     filter: drop-shadow(0 0 5px var(--color-neon));
 }
 
-/* Links de Navegación (Escritorio) */
+/* Ocultar la hamburguesa en escritorio */
+#menu-toggle-btn {
+    display: none; 
+}
+
+/* Links de Navegación (Centrados) */
 .nav-links {
     display: flex;
     gap: 25px;
+    flex-grow: 1; 
+    justify-content: center; /* CLAVE para centrar los links */
 }
 .nav-link {
     text-transform: uppercase;
@@ -94,12 +116,7 @@ button {
     border-bottom: 2px solid var(--color-neon);
 }
 
-/* Iconos (Carrito, Búsqueda) */
-.top-bar-icon-group {
-    display: flex; 
-    gap: 15px;
-}
-
+/* Iconos y Contador */
 .top-bar-icon {
     background: none;
     border: none;
@@ -113,8 +130,6 @@ button {
 .top-bar-icon:hover {
     color: var(--color-neon);
 }
-
-/* Contador del Carrito */
 #cart-count {
     background-color: var(--color-accent);
     color: var(--color-text-light);
@@ -127,17 +142,9 @@ button {
     line-height: 1;
 }
 
-/* Ocultar el botón de hamburguesa por defecto en escritorio */
-#menu-toggle-btn {
-    display: none; 
-}
-
-
 /* ========================================================= */
 /* 3. LÓGICA DE VISIBILIDAD (SPA) */
 /* ========================================================= */
-
-/* Clase para ocultar secciones (Usada por navigateTo) */
 .content-page, #main-footer {
     transition: opacity 0.3s ease;
     display: block; 
@@ -148,10 +155,32 @@ button {
     opacity: 0;
 }
 
+/* ========================================================= */
+/* 4. MÓDULO DE PRODUCTOS Y HERO */
+/* ========================================================= */
+.hero {
+    text-align: center;
+    padding: 50px 20px;
+}
+.hero-logo {
+    max-width: 300px;
+    width: 80%;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 10px var(--color-neon));
+}
+.neon-text {
+    font-size: 2.5rem;
+    color: var(--color-text-light);
+    text-shadow: 0 0 10px var(--color-neon), 0 0 20px var(--color-neon);
+    margin-bottom: 10px;
+}
+.section-title {
+    text-align: center;
+    margin: 40px 0 20px;
+    font-size: 2rem;
+    text-shadow: 0 0 5px var(--color-accent);
+}
 
-/* ========================================================= */
-/* 4. MÓDULO DE PRODUCTOS */
-/* ========================================================= */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -205,12 +234,9 @@ button {
     box-shadow: 0 0 10px var(--color-accent);
 }
 
-
 /* ========================================================= */
 /* 5. MODALES, OVERLAY Y NOTIFICACIONES */
 /* ========================================================= */
-
-/* Overlay general para modales */
 #overlay {
     position: fixed;
     top: 0;
@@ -220,7 +246,6 @@ button {
     background-color: rgba(0, 0, 0, 0.8);
     z-index: 998; 
     transition: opacity 0.3s ease;
-    /* Estado inicial */
     opacity: 0;
     pointer-events: none; 
 }
@@ -241,7 +266,6 @@ button {
     z-index: 1000;
     max-width: 400px;
     width: 90%;
-    /* Estado inicial */
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -252,15 +276,6 @@ button {
     visibility: visible;
 }
 
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--color-accent);
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-}
-
 .close-modal-btn {
     background: none;
     border: none;
@@ -269,11 +284,8 @@ button {
     cursor: pointer;
 }
 
-/* Estilos de Carrito y Checkout (ya incluidos en la respuesta anterior) */
-/* ... */
+/* ... (Contenido de carrito y checkout) ... */
 
-
-/* Notificaciones */
 #cart-notification {
     position: fixed;
     top: 20px;
@@ -292,11 +304,9 @@ button {
     opacity: 1;
 }
 
-
 /* ========================================================= */
 /* 6. MÓDULO MÓVIL (MENÚ DE HAMBURGUESA) */
 /* ========================================================= */
-
 #mobile-menu {
     position: fixed;
     top: 0;
@@ -310,19 +320,14 @@ button {
     transition: transform 0.4s ease-out; 
     padding-top: 60px;
 }
-
-/* Estado Inicial (Oculto) */
 #mobile-menu.closed {
     transform: translateX(100%);
     visibility: hidden; 
 }
-
-/* Estado Visible */
 #mobile-menu.visible {
     transform: translateX(0);
     visibility: visible;
 }
-
 #close-mobile-menu-btn {
     position: absolute;
     top: 15px;
@@ -334,7 +339,6 @@ button {
     cursor: pointer;
     z-index: 1001; 
 }
-
 .nav-link-mobile {
     display: block;
     padding: 15px 20px;
@@ -345,17 +349,14 @@ button {
     border-bottom: 1px solid rgba(0, 255, 255, 0.1);
     transition: background-color 0.2s ease, color 0.2s ease;
 }
-
 .nav-link-mobile:hover, .nav-link-mobile.active {
     background-color: rgba(0, 255, 255, 0.1);
     color: var(--color-neon);
 }
 
-
 /* ========================================================= */
 /* 7. REPRODUCTOR DE MÚSICA Y FLOTANTES */
 /* ========================================================= */
-
 .floating-btn {
     position: fixed;
     bottom: 20px;
@@ -374,7 +375,6 @@ button {
     box-shadow: 0 0 10px var(--color-accent);
     z-index: 901; 
 }
-
 .music-player-bar {
     position: fixed;
     bottom: 20px;
@@ -395,70 +395,53 @@ button {
     pointer-events: none;
     transform: translateX(-100px);
 }
-.music-player-bar span {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 150px; 
-}
-.music-player-bar .player-btn {
-    background: none;
-    border: none;
-    color: var(--color-neon);
-    font-size: 1.1rem;
-    cursor: pointer;
-}
-
 
 /* ========================================================= */
 /* 8. MEDIA QUERIES (MÓVIL) - LA CLAVE DE LA SOLUCIÓN */
 /* ========================================================= */
-
 @media (max-width: 768px) {
     
     /* --- BARRA SUPERIOR (HEADER) --- */
     #top-bar {
-        /* Fuerza la redistribución de los elementos en móvil */
-        display: flex;
-        justify-content: space-between; 
         padding: 10px;
     }
-
-    /* 🔑 1. Mostrar la hamburguesa y ordenar a la izquierda */
-    #menu-toggle-btn {
-        display: block;
+    
+    /* 🔑 1. Posicionar el Grupo Izquierdo (Hamburguesa) */
+    .top-bar-left {
         order: 1; 
-        font-size: 1.8rem; 
-    }
-
-    /* 🔑 2. Ocultar la navegación de escritorio */
-    .top-nav-center {
-        display: none; 
+        min-width: auto; 
     }
     
-    /* 🔑 3. Centrar el logo y darle orden 2 */
+    /* 🔑 2. Posicionar el Grupo Derecho (Búsqueda/Carrito) */
+    .top-bar-right {
+        order: 3; 
+        min-width: auto;
+    }
+    
+    /* 🔑 3. Centrar el Logo (lo sacamos del flujo FLEX) */
     .top-bar-logo {
         height: 35px;
         position: absolute; 
         left: 50%;
         transform: translateX(-50%); 
-        order: 2; 
         z-index: 1002; 
+        margin: 0;
     }
-
-    /* 🔑 4. Agrupar íconos de la derecha y darles orden 3 */
-    .top-bar-icon-group {
-        display: flex; 
-        gap: 15px; 
-        order: 3; 
-        /* Usar margin-left: auto para forzar que el grupo se mantenga a la derecha,
-           sin importar el position: absolute del logo */
-        margin-left: auto;
+    
+    /* 🔑 4. Mostrar la Hamburguesa y Ocultar links de escritorio */
+    #menu-toggle-btn {
+        display: block; 
+    }
+    .top-nav-center {
+        display: none; 
     }
     
     /* --- AJUSTES EN EL CUERPO --- */
+    .neon-text {
+        font-size: 2rem;
+    }
     .product-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* 2 columnas en móvil */
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
         gap: 20px;
         padding: 20px 10px;
     }
@@ -471,12 +454,10 @@ button {
         width: 95%; 
         max-width: none; 
     }
-    
-    /* Ajuste de ubicación para que los flotantes no estorben */
     .music-player-bar {
         left: 10px;
         bottom: 70px;
-        max-width: calc(100% - 80px); /* Ajuste de ancho */
+        max-width: calc(100% - 80px); 
     }
     .floating-btn {
         right: 10px;
