@@ -1,5 +1,5 @@
 // =========================================================
-// 1. DATA: PRODUCTOS
+// 1. DATA: PRODUCTOS Y ELEMENTOS CLAVE
 // =========================================================
 const products = [
     { id: 1, name: "Chaqueta Bomber Street", price: 95.00, category: "Conjuntos", isFeatured: true, isLiquidacion: false, image: "images/chaqueta_bomber.jpg" },
@@ -13,11 +13,16 @@ const products = [
     { id: 9, name: "Camiseta Vintage 90s", price: 40.00, category: "Remeras", isFeatured: false, isLiquidacion: false, image: "images/camiseta_vintage.jpg" }
 ];
 
-// 🆕 NUEVOS SELECTORES PARA MENÚ MÓVIL
+// Selectores del DOM
 const menuToggleBtn = document.getElementById('menu-toggle-btn');
 const mobileMenu = document.getElementById('mobile-menu');
-const closeMobileMenuBtn = document.getElementById('close-mobile-menu-btn'); // ID corregido
+const closeMobileMenuBtn = document.getElementById('close-mobile-menu-btn');
 const mobileLinks = document.querySelectorAll('.nav-link-mobile');
+const overlay = document.getElementById('overlay');
+const cartIconBtn = document.getElementById('cart-icon-btn');
+const searchBtnTop = document.getElementById('search-btn-top');
+const searchOverlay = document.getElementById('search-overlay');
+const closeSearchBtn = document.getElementById('close-search-btn');
 
 // =========================================================
 // 2. LÓGICA DE NAVEGACIÓN (SPA)
@@ -36,10 +41,12 @@ function navigateTo(targetPage) {
 
     const sectionsToShow = pages[targetPage] || pages['INICIO'];
 
+    // Ocultar todas las páginas y footer
     document.querySelectorAll('.content-page, #main-footer').forEach(element => {
         element.classList.add('closed');
     });
 
+    // Mostrar las secciones target
     sectionsToShow.forEach(id => {
         const element = document.getElementById(id);
         if (element) {
@@ -47,6 +54,7 @@ function navigateTo(targetPage) {
         }
     });
 
+    // Actualizar clases 'active' en la navegación de escritorio
     document.querySelectorAll('.top-nav-center .nav-link').forEach(link => {
         link.classList.remove('active');
         if (link.dataset.target === targetPage) {
@@ -54,7 +62,7 @@ function navigateTo(targetPage) {
         }
     });
 
-    // 🆕 ACTIVA EL LINK CORRESPONDIENTE EN EL MENÚ MÓVIL
+    // Actualizar clases 'active' en el menú móvil
     document.querySelectorAll('.mobile-nav-links .nav-link-mobile').forEach(link => {
         link.classList.remove('active');
         if (link.dataset.target === targetPage) {
@@ -112,6 +120,7 @@ function setupCatalogFilters() {
         }
     });
 
+    // Renderizar todos los productos al cargar la sección catálogo por primera vez
     renderProducts(products, 'catalog-product-list');
 }
 
@@ -119,7 +128,6 @@ function setupCatalogFilters() {
 // 4. LÓGICA DEL CARRITO Y MODALES
 // =========================================================
 let cart = [];
-const overlay = document.getElementById('overlay');
 
 function getCart() {
     const storedCart = localStorage.getItem('urbanFeedCart');
@@ -180,7 +188,7 @@ function addToCart(productId) {
     }
     
     saveCart(cart);
-    showNotification(`${product.name} añadido al carrito!`);
+    showNotification(`✅ ${product.name} añadido al carrito!`);
 }
 
 function removeFromCart(productId) {
@@ -196,9 +204,11 @@ function removeFromCart(productId) {
     saveCart(cart);
 }
 
-// LÓGICA DE APERTURA DEL MODAL (VERIFICADA Y CORREGIDA)
+// LÓGICA DE APERTURA DEL MODAL (VERIFICADA)
 function openModal(modalId) {
-    closeModal(); 
+    // Primero cerramos cualquier modal o menú móvil abierto
+    closeAllInteractions(); 
+    
     const modal = document.getElementById(modalId);
     if (modal) {
         modal.classList.add('visible');
@@ -206,48 +216,69 @@ function openModal(modalId) {
         
         overlay.classList.add('visible');
         overlay.classList.remove('closed'); 
-        
-        // Cierra el menú móvil si está abierto antes de abrir el modal
-        if (mobileMenu && mobileMenu.classList.contains('visible')) {
-            mobileMenu.classList.remove('visible');
-        }
     }
 }
 
-// LÓGICA DE CIERRE DEL MODAL (VERIFICADA)
-function closeModal() {
+// LÓGICA DE CIERRE DE MODALES Y MENÚS
+function closeAllInteractions() {
+    // Cerrar Modales
     document.querySelectorAll('.modal').forEach(modal => {
         modal.classList.remove('visible');
         modal.classList.add('closed');
     });
-    overlay.classList.remove('visible');
-    overlay.classList.add('closed');
+    // Cerrar Menú Móvil
+    if (mobileMenu) {
+        mobileMenu.classList.remove('visible');
+        mobileMenu.classList.add('closed');
+    }
+    // Cerrar Overlay de Búsqueda
+    if (searchOverlay) {
+        searchOverlay.classList.add('closed');
+    }
+    // Ocultar Overlay general
+    if (overlay) {
+        overlay.classList.remove('visible');
+        overlay.classList.add('closed');
+    }
 }
 
 // ==========================================================
 // 5. LÓGICA DE INTERACCIÓN MÓVIL
 // ==========================================================
 
-// 🆕 LÓGICA DEL MENÚ DE HAMBURGUESA
+// LÓGICA DEL MENÚ DE HAMBURGUESA
 if (menuToggleBtn && mobileMenu) {
     menuToggleBtn.addEventListener('click', () => {
+        // Aseguramos que se cierren otros elementos antes de abrir el menú
+        closeAllInteractions(); 
+        
         mobileMenu.classList.toggle('visible');
         mobileMenu.classList.toggle('closed');
+        // El menú móvil no necesita el overlay, pero si lo hubiera, aquí se podría activar
     });
 
-    closeMobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.remove('visible');
-        mobileMenu.classList.add('closed');
-    });
+    closeMobileMenuBtn.addEventListener('click', closeAllInteractions);
 
     // Cerrar menú al hacer clic en un enlace móvil
     mobileLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault(); // Evita el salto instantáneo
+            e.preventDefault(); 
             navigateTo(e.target.dataset.target);
-            mobileMenu.classList.remove('visible');
-            mobileMenu.classList.add('closed');
+            closeAllInteractions(); // Cierra el menú después de navegar
         });
+    });
+}
+
+// Lógica para Abrir/Cerrar la barra de búsqueda superior
+if (searchBtnTop && searchOverlay && closeSearchBtn) {
+    searchBtnTop.addEventListener('click', () => {
+        searchOverlay.classList.toggle('closed');
+        searchOverlay.classList.toggle('visible'); // Agregamos 'visible' por si acaso
+    });
+    
+    closeSearchBtn.addEventListener('click', () => {
+        searchOverlay.classList.add('closed');
+        searchOverlay.classList.remove('visible');
     });
 }
 
@@ -260,7 +291,7 @@ const musicAudio = document.getElementById('background-music');
 const musicBar = document.getElementById('music-player-bar');
 const musicToggleButton = document.getElementById('music-toggle-btn');
 const nextSongButton = document.getElementById('next-song-btn'); 
-const musicTitleDisplay = musicBar.querySelector('span');
+const musicTitleDisplay = musicBar ? musicBar.querySelector('span') : null;
 let currentSongIndex = 0;
 let isPlaying = false;
 
@@ -283,7 +314,7 @@ const playlist = [
 ];
 
 function loadAndPlaySong() {
-    if (playlist.length === 0) return;
+    if (playlist.length === 0 || !musicAudio || !musicTitleDisplay) return;
 
     if (currentSongIndex >= playlist.length) {
         currentSongIndex = 0; 
@@ -299,23 +330,27 @@ function loadAndPlaySong() {
     musicAudio.load();
     
     if (isPlaying) {
+        // Intentar reproducir y manejar error de AutoPlay
         musicAudio.play().catch(error => {
-            console.warn("El navegador bloqueó el AutoPlay o hubo un error de códec. El usuario debe interactuar.", error);
+            console.warn("El navegador bloqueó el AutoPlay. El usuario debe interactuar.", error);
         });
     }
 }
 
 function toggleMusic() {
+    if (!musicAudio || !musicBar || !musicToggleButton) return;
+    
+    // Primero, carga la canción si aún no está cargada o se ha pausado
+    if (!isPlaying && (!musicAudio.src || musicAudio.paused)) {
+        loadAndPlaySong();
+    }
+    
     if (isPlaying) {
         musicAudio.pause();
         musicBar.classList.add('closed');
         musicToggleButton.innerHTML = '<i class="fas fa-volume-off"></i>';
         isPlaying = false;
     } else {
-        if (!musicAudio.src || musicAudio.src.includes('audio/cancion_1.mp3')) {
-            loadAndPlaySong(); 
-        }
-        
         musicAudio.play().catch(error => {
             console.warn("Error de AutoPlay al intentar reproducir.", error);
         });
@@ -327,20 +362,17 @@ function toggleMusic() {
 }
 
 function playNextSong() {
-    currentSongIndex++; 
+    currentSongIndex = (currentSongIndex + 1) % playlist.length; // Asegura que vuelva a 0
     loadAndPlaySong(); 
 }
 
-musicAudio.addEventListener('ended', playNextSong);
-
-musicToggleButton.addEventListener('click', toggleMusic);
-nextSongButton.addEventListener('click', (e) => {
-    e.stopPropagation(); 
-    playNextSong();
-});
-
-if (playlist.length > 0) {
-    musicTitleDisplay.textContent = `🎧 ${playlist[currentSongIndex].title}`;
+if (musicAudio && musicToggleButton && nextSongButton) {
+    musicAudio.addEventListener('ended', playNextSong);
+    musicToggleButton.addEventListener('click', toggleMusic);
+    nextSongButton.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        playNextSong();
+    });
 }
 
 
@@ -369,7 +401,7 @@ document.addEventListener('click', (e) => {
 
     // 4. Control de Modales (Cerrar)
     if (e.target.classList.contains('close-modal-btn') || e.target.closest('.close-modal-btn') || e.target.id === 'overlay') {
-        closeModal();
+        closeAllInteractions(); // Usamos la función global
     }
     
     // 5. Abrir Modal de Checkout
@@ -378,9 +410,7 @@ document.addEventListener('click', (e) => {
     }
     
     // 6. Control del Botón Flotante de Música
-    if (e.target.id === 'music-toggle-btn' || e.target.closest('#music-toggle-btn')) {
-        toggleMusic(); // Usamos la función ya definida
-    }
+    // NOTA: Se eliminó el listener repetido, ya está en la Sección 6.
 
     // 7. Generar Mensaje de WhatsApp
     if (e.target.closest('#checkout-form')) {
@@ -416,9 +446,15 @@ document.addEventListener('click', (e) => {
         orderSummary += "---------------------------------------\n\n";
         orderSummary += "_Por favor, confirma stock y coordina el pago y envío. ¡Gracias!_";
 
-        const whatsappUrl = `https://wa.me/5493413688248?text=${encodeURIComponent(orderSummary)}`;
+        // Número de contacto de WhatsApp (UrbanFeed)
+        const whatsappNumber = '5493413688248';
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderSummary)}`;
         
         window.open(whatsappUrl, '_blank');
+        
+        // Opcional: Limpiar carrito y cerrar modal después del checkout
+        saveCart([]);
+        closeAllInteractions();
     }
 });
 
@@ -432,32 +468,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Inicialización de Modales y Carrito
     cart = getCart(); 
     updateCartDisplay();
-    closeModal(); // Aseguramos que todos los modales estén cerrados al inicio
+    closeAllInteractions(); // Aseguramos que todo esté cerrado al inicio
 
-    // 3. Inicialización de Música (simplificado, ya usa toggleMusic)
+    // 3. Inicialización de Música
     if (playlist.length > 0) {
-        loadAndPlaySong(); // Carga la primera canción al inicio
+        // Muestra el título de la primera canción, pero no la reproduce automáticamente
+        musicTitleDisplay.textContent = `🎧 ${playlist[currentSongIndex].title}`;
     }
-    // NOTA: Se eliminó código redundante de música (initMusicPlayer, etc.)
 
     // 4. Lógica de Botones Top-Bar (Carrito y Búsqueda)
-    const cartIconBtn = document.getElementById('cart-icon-btn'); // 🆕 Usando el nuevo ID
-    const searchOverlay = document.getElementById('search-overlay');
-    
     if (cartIconBtn) {
         cartIconBtn.addEventListener('click', () => {
-            openModal('cart-modal'); // **CORREGIDO: Ahora abre el modal correctamente**
-        });
-    }
-    
-    if (document.getElementById('search-btn-top')) {
-        document.getElementById('search-btn-top').addEventListener('click', () => {
-            searchOverlay.classList.toggle('closed');
-        });
-    }
-    if (document.getElementById('close-search-btn')) {
-        document.getElementById('close-search-btn').addEventListener('click', () => {
-            searchOverlay.classList.add('closed');
+            openModal('cart-modal'); 
         });
     }
 
