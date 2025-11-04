@@ -2,216 +2,125 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    
-    <title>UrbanFeed | Streetwear & Cultura Underground</title> 
-    
-    <link rel="stylesheet" href="styles/style.css"> 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Monoton&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanFeed | Streetwear & Culture</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    
-    <div id="top-bar">
-        <div class="top-bar-left">
-            <img src="images/logo.png" alt="UrbanFeed Logo" class="top-bar-logo">
-        </div>
 
-        <button id="menu-toggle-btn" class="top-bar-icon" data-color="blue" aria-label="Abrir Menú">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <nav class="nav-links top-nav-center">
-            <a href="#" class="nav-link active" data-target="INICIO">Inicio</a>
-            <a href="#" class="nav-link" data-target="CATÁLOGO">Catálogo</a>
-            <a href="#" class="nav-link" data-target="LIQUIDACIÓN">Liquidación</a>
-            <a href="#" class="nav-link" data-target="CONTACTO">Contacto</a>
-        </nav>
-        
-        <div class="top-bar-right">
-             <button id="search-btn-top" class="top-bar-icon" data-color="violet" aria-label="Buscar"><i class="fas fa-search"></i></button>
-            <button id="cart-icon-btn" class="top-bar-icon" data-color="red" aria-label="Abrir Carrito">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cart-count">0</span>
-            </button>
+    <header id="main-header">
+        <div id="top-bar">
+            
+            <div class="top-bar-left">
+                <button id="menu-toggle-btn" class="top-bar-icon" aria-label="Abrir Menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <img src="images/logo.png" alt="UrbanFeed Logo" class="top-bar-logo">
+            </div>
+
+            <nav class="nav-links top-nav-center">
+                <a href="#" class="nav-link active" data-target="INICIO">Inicio</a>
+                <a href="#" class="nav-link" data-target="CATÁLOGO">Catálogo</a>
+                <a href="#" class="nav-link" data-target="LIQUIDACIÓN">Liquidación</a>
+                <a href="#" class="nav-link" data-target="CONTACTO">Contacto</a>
+            </nav>
+            
+            <div class="top-bar-right top-bar-icon-group">
+                <button id="search-btn-top" class="top-bar-icon" aria-label="Buscar"><i class="fas fa-search"></i></button>
+                <button id="cart-icon-btn" class="top-bar-icon" aria-label="Abrir Carrito">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </button>
+            </div>
+            
         </div>
-        
-        <div id="search-overlay" class="closed">
-            <input type="text" id="product-search-input" placeholder="Buscar productos...">
-            <button id="close-search-btn">&times;</button>
-        </div>
-    </div>
+    </header>
 
 
     <main id="main-content">
-        
-        <section id="page-inicio" class="content-page">
-         <header id="main-header">
-    <div id="top-bar">
-        
-        <button id="menu-toggle-btn" class="top-bar-icon" aria-label="Abrir Menú">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <img src="images/logo.png" alt="UrbanFeed Logo" class="top-bar-logo">
 
-        <nav class="nav-links top-nav-center">
-            <a href="#" class="nav-link active" data-target="INICIO">Inicio</a>
-            <a href="#" class="nav-link" data-target="CATÁLOGO">Catálogo</a>
-            <a href="#" class="nav-link" data-target="LIQUIDACIÓN">Liquidación</a>
-            <a href="#" class="nav-link" data-target="CONTACTO">Contacto</a>
-        </nav>
-        
-        <div class="top-bar-icon-group">
-            <button id="search-btn-top" class="top-bar-icon" aria-label="Buscar"><i class="fas fa-search"></i></button>
-            <button id="cart-icon-btn" class="top-bar-icon" aria-label="Abrir Carrito">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cart-count">0</span>
-            </button>
-        </div>
-    </div>
-</header>
-
-            <h2 class="section-title" data-color="red">PRODUCTOS DESTACADOS</h2>
-            <div class="product-grid" id="product-list">
+        <section id="INICIO" class="content-page visible">
+            <div class="hero">
+                <img src="images/logo-grande.png" alt="UrbanFeed Streetwear & Culture" class="hero-logo">
+                <h2 class="neon-text">STREETWEAR & CULTURE</h2>
+                <p>ENVÍO GRATIS EN ROSARIO CON TU COMPRA DE MÁS DE $75.000</p>
+            </div>
+            
+            <h2 class="section-title">PRODUCTOS DESTACADOS</h2>
+            <div class="product-grid">
+                <div class="product-card" data-id="chaqueta-bomber" data-category="chaquetas">
+                    <img src="images/chaqueta_bomber.jpg" alt="Chaqueta Bomber Street">
+                    <h3>Chaqueta Bomber Street</h3>
+                    <p class="price">$95.00</p>
+                    <button class="neon-btn add-to-cart-btn">AÑADIR AL CARRITO</button>
+                </div>
                 </div>
         </section>
 
-        
-        <section id="page-catalog-filters" class="content-page closed">
-            <h2 class="section-title" data-color="blue">Busca Tu Estilo | Catálogo</h2>
-            
-            <div id="category-filter-buttons">
-                <button class="category-btn active" data-category="ALL" data-color="violet">TODOS</button>
-                <button class="category-btn" data-category="Conjuntos" data-color="blue">CONJUNTOS</button>
-                <button class="category-btn" data-category="Buzos" data-color="blue">BUZOS</button>
-                <button class="category-btn" data-category="Pantalones" data-color="blue">PANTALONES</button>
-                <button class="category-btn" data-category="Shorts" data-color="blue">SHORTS</button>
-                <button class="category-btn" data-category="Remeras" data-color="blue">REMERAS</button>
-                <button class="category-btn" data-category="Accesorios" data-color="blue">ACCESORIOS</button>
+        <section id="CATÁLOGO" class="content-page closed">
+            <h2 class="section-title">CATÁLOGO COMPLETO</h2>
+            <div class="filter-buttons">
+                <button class="category-btn active" data-filter="all">TODOS</button>
+                <button class="category-btn" data-filter="gorras">GORRAS</button>
+                <button class="category-btn" data-filter="remeras">REMERAS</button>
+                <button class="category-btn" data-filter="chaquetas">CHAQUETAS</button>
             </div>
-            
-            <h3 class="subsection-title" id="catalog-title-display" data-color="red">TODOS LOS PRODUCTOS</h3>
-            <div class="product-grid" id="catalog-product-list">
-            </div>
+            <div class="product-grid" id="catalogo-grid">
+                </div>
         </section>
 
-
-        <section id="page-liquidacion" class="content-page closed">
-            <h2 class="section-title" data-color="violet">LIQUIDACIÓN: 🔥 ÚLTIMAS PRENDAS 🔥</h2>
-            <p class="liquidacion-slogan">¡No te quedes sin tu joya a precio de ganga!</p>
-            <div class="product-grid" id="liquidacion-list">
-            </div>
+        <section id="LIQUIDACIÓN" class="content-page closed">
+            <h2 class="section-title">LIQUIDACIÓN 🔥</h2>
+            <p>¡Últimas unidades con grandes descuentos!</p>
+            <div class="product-grid" id="liquidacion-grid">
+                </div>
         </section>
 
-
-        <section id="page-contacto" class="content-page closed">
-            <h2 class="section-title" data-color="orange">Hablemos | Contacto Directo</h2>
-            <p>Aquí puedes encontrarnos y hacer tus consultas de manera rápida:</p>
-            
-            <div class="contact-links-grid">
-                <a href="https://wa.me/5493413688248" target="_blank" class="contact-btn whatsapp-btn">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>WhatsApp (Contacto Rápido)</span>
-                </a>
-                <a href="https://www.instagram.com/urban_feed1/" target="_blank" class="contact-btn instagram-btn">
-                    <i class="fab fa-instagram"></i>
-                    <span>Instagram (@urban_feed1)</span>
-                </a>
-            </div>
+        <section id="CONTACTO" class="content-page closed">
+            <h2 class="section-title">CONTACTO</h2>
+            <p>Puedes contactarnos a través de WhatsApp o Instagram.</p>
         </section>
-        
-        
-        <footer id="main-footer">
-            <div id="footer-content">
-                <img src="images/logo.png" alt="UrbanFeed Logo" id="footer-logo">
-                <pre class="footer-text">
-EN URBAN FEED | STREETWEAR & CULTURE NOS ESPECIALIZAMOS EN LA BÚSQUEDA Y SELECCIÓN DE ROPA IMPORTADA DESDE CHILE Y BOLIVIA, ELIGIENDO CADA PRENDA POR SU CALIDAD, AUTENTICIDAD Y ESTILO.
 
-¡TRABAJAMOS EN DOS LÍNEAS!
-URBAN SUPPLY: <LÍNEA MAYORISTA>
-PRENDAS SELECCIONADAS, VERSÁTILES Y DE ALTA ROTACIÓN, IDEALES PARA TIENDAS Y EMPRENDEDORES.
-
-URBAN EXCLUSIVE: <LÍNEA MINORISTA>
-PIEZAS ÚNICAS, CON HISTORIA Y DISEÑO, PENSADAS PARA QUIENES BUSCAN DESTACARSE.
-                </pre>
-            </div>
-        </footer>
-        
     </main>
-    
-    <nav id="mobile-menu" class="closed">
-        <button id="close-mobile-menu-btn" class="close-modal-btn" aria-label="Cerrar Menú">&times;</button>
-        <div class="mobile-nav-links">
-            <a href="#" class="nav-link-mobile" data-target="INICIO">INICIO</a>
-            <a href="#" class="nav-link-mobile" data-target="CATÁLOGO">CATÁLOGO</a>
-            <a href="#" class="nav-link-mobile" data-target="LIQUIDACIÓN">LIQUIDACIÓN</a>
-            <a href="#" class="nav-link-mobile" data-target="CONTACTO">CONTACTO</a>
-        </div>
-    </nav>
-    
+
+
+    <div id="mobile-menu" class="closed">
+        <button id="close-mobile-menu-btn" aria-label="Cerrar Menú"><i class="fas fa-times"></i></button>
+        <a href="#" class="nav-link-mobile active" data-target="INICIO">Inicio</a>
+        <a href="#" class="nav-link-mobile" data-target="CATÁLOGO">Catálogo</a>
+        <a href="#" class="nav-link-mobile" data-target="LIQUIDACIÓN">Liquidación</a>
+        <a href="#" class="nav-link-mobile" data-target="CONTACTO">Contacto</a>
+    </div>
+
     <div id="cart-modal" class="modal closed">
-        <button class="close-modal-btn" data-modal="cart-modal" aria-label="Cerrar Carrito">&times;</button>
-        <h2 data-color="red">Tu Carrito UrbanFeed</h2>
-        <div id="cart-items-list" class="cart-items-list"></div>
-        <div id="cart-summary">
-            <p>Total: <span id="cart-total">$0.00</span></p>
         </div>
-        <button id="open-checkout-modal-btn" class="neon-btn" data-color="blue">
-            CONTINUAR (DATOS DE ENVÍO)
-        </button>
-    </div>
-    
+
     <div id="checkout-modal" class="modal closed">
-        <button class="close-modal-btn" data-modal="checkout-modal" aria-label="Cerrar Checkout">&times;</button>
-        <h2 data-color="orange">Tus Datos para el Pedido</h2>
-        <p>Necesitamos estos datos para generar el mensaje de compra por WhatsApp:</p>
-        <form id="checkout-form">
-            <input type="text" id="checkout-name" placeholder="Nombre y Apellido" required>
-            <input type="text" id="checkout-address" placeholder="Dirección Completa (Calle, N°, Ciudad)" required>
-            <input type="text" id="checkout-contact" placeholder="Contacto (Teléfono / Línea Directa)" required>
-            
-            <button type="submit" class="neon-btn" data-color="red">
-                CERRAR COMPRA POR WHATSAPP
-            </button>
-        </form>
+        </div>
+
+    <div id="search-overlay" class="closed">
+        <input type="text" id="search-input" placeholder="Buscar productos...">
+        <button id="close-search-btn"><i class="fas fa-times"></i></button>
     </div>
-    
-    <div id="contact-float-container">
-        <a href="https://wa.me/5493413688248" target="_blank" class="contact-float-btn whatsapp-float-btn" title="Contactar por WhatsApp" aria-label="WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-        <a href="https://www.instagram.com/urban_feed1/" target="_blank" class="contact-float-btn instagram-float-btn" title="Síguenos en Instagram" aria-label="Instagram">
-            <i class="fab fa-instagram"></i>
-        </a>
-    </div>
+
+    <div id="overlay" class="closed"></div>
+
+    <div id="cart-notification" class="closed">Producto añadido al carrito.</div>
 
     <div id="music-float-container">
-        <button id="music-toggle-btn" aria-label="Toggle Music Player">
-            <i class="fas fa-volume-up"></i>
-        </button>
-        
-        <div id="music-player-bar" class="closed">
-            <audio id="background-music" preload="auto"> 
-                Tu navegador no soporta el elemento de audio.
-            </audio>
-            
-            <span style="flex-grow: 1;">Música Neón</span>
-            
-            <button id="next-song-btn" class="top-bar-icon" style="font-size: 1em; padding: 0;" aria-label="Siguiente Canción">
-                <i class="fas fa-step-forward"></i>
-            </button>
+        <button id="music-floating-btn" class="floating-btn"><i class="fas fa-volume-up"></i></button>
+        <div id="music-player-bar" class="music-player-bar closed">
+            <button id="music-play-pause-btn" class="player-btn"><i class="fas fa-play"></i></button>
+            <span id="music-track-title"></span>
+            <button id="music-close-btn" class="player-btn"><i class="fas fa-times"></i></button>
         </div>
     </div>
+    
+    <footer id="main-footer">
+        <p>&copy; 2025 UrbanFeed Streetwear & Culture. Todos los derechos reservados.</p>
+    </footer>
 
-    <div id="overlay" class="closed"></div> 
-    <div id="cart-notification" class="closed"></div>
-
-<script src="scripts/main.js"></script> 
+    <script src="js/main.js"></script>
 </body>
-
 </html>
-
-
